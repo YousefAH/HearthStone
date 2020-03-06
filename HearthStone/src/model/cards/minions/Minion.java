@@ -13,8 +13,8 @@ public class Minion extends Card {
 	private boolean attacked;
 	private boolean charge;
 
-	public Minion() {}
-	 public Minion(String name,int manaCost,Rarity rarity, int attack,int maxHP,boolean taunt,boolean divine,boolean charge) {
+	public Minion(String name, int manaCost, Rarity rarity, int attack, int maxHP, boolean taunt, boolean divine,
+			boolean charge) {
 		super(name, manaCost, rarity);
 		setAttack(attack);
 		this.maxHP = maxHP;
@@ -31,7 +31,7 @@ public class Minion extends Card {
 	}
 
 	public void setCurrentHP(int currentHP) {
-		if(currentHP > this.maxHP)
+		if (currentHP > this.maxHP)
 			currentHP = maxHP;
 		else
 			this.currentHP = currentHP;
@@ -58,8 +58,7 @@ public class Minion extends Card {
 	}
 
 	public void setAttack(int attack) {
-		
-		this.attack = (attack>10)? 10:((attack<0)? 0: attack);
+		this.attack = (attack < 0) ? 0 : attack;
 	}
 
 	public int getMaxHP() {
@@ -94,9 +93,10 @@ public class Minion extends Card {
 		this.charge = charge;
 	}
 
-	public boolean equals(Object o) 
-	{
-		return super.equals(o) && this.attack == ((Minion) o).attack && this.maxHP == ((Minion) o).maxHP && this.taunt == ((Minion) o).taunt && this.divine == ((Minion) o).divine && this.charge == ((Minion) o).charge;
+	public boolean equals(Object o) {
+		return super.equals(o) && this.attack == ((Minion) o).attack && this.maxHP == ((Minion) o).maxHP
+				&& this.taunt == ((Minion) o).taunt && this.divine == ((Minion) o).divine
+				&& this.charge == ((Minion) o).charge;
 	}
 
 	public String toString() {
