@@ -31,7 +31,10 @@ public class Minion extends Card {
 	}
 
 	public void setCurrentHP(int currentHP) {
-		this.currentHP = currentHP;
+		if(currentHP > this.maxHP)
+			currentHP = maxHP;
+		else
+			this.currentHP = currentHP;
 	}
 
 	public boolean isSleeping() {
