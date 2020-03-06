@@ -14,10 +14,7 @@ public class Hunter extends Hero
 	public Hunter() throws IOException
 	{
 		super("Rexxar");
-//		this.setCurrentHP(currentHP);
-//		this.setHeroPowerUsed(heroPowerUsed);
-//		this.setTotalManaCrystals(totalManaCrystals);
-//		this.setCurrentManaCrystals(currentManaCrystals);
+
 		
 	}
 	
@@ -39,12 +36,4 @@ public class Hunter extends Hero
 
 	}
 	
-//	public static void main(String[] args) throws IOException 
-//	{
-//		Hunter h = new Hunter();
-//		h.buildDeck();
-//		for (int i = 0; i < h.deck.size(); i++) {
-//			System.out.println(i+1 +" "+h.deck.get(i));
-//		}
-	//}
 }

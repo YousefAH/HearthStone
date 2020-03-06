@@ -35,14 +35,5 @@ public class Paladin extends Hero {
 		
 	}
 	
-	public static void main(String[] args) throws IOException
-	{
-		Paladin h = new Paladin();
-		
-		for (int i = 0; i < h.getDeck().size(); i++) {
-			System.out.println(i+1 +" "+h.getDeck().get(i));
-		}
-	}
-	
 
 }

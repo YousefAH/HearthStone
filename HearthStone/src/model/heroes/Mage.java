@@ -34,12 +34,5 @@ public class Mage extends Hero
 		Collections.shuffle(getDeck());
 		
 	}
-	public static void main(String[] args) throws IOException
-	{
-		Mage h = new Mage();
-		h.buildDeck();
-		for (int i = 0; i < h.getDeck().size(); i++) {
-			System.out.println(i+1 +" "+h.getDeck().get(i));
-		}
-	}
+	
 }

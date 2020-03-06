@@ -35,12 +35,4 @@ public class Priest extends Hero
 		
 	}
 	
-	public static void main(String[] args) throws IOException
-	{
-		Priest h = new Priest();
-		
-		for (int i = 0; i < h.getDeck().size(); i++) {
-			System.out.println(i+1 +" "+h.getDeck().get(i));
-		}
-	}
 }

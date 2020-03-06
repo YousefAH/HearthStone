@@ -13,7 +13,6 @@ public class Warlock extends Hero
 	public Warlock() throws IOException
 	{
 		super("Gul'dan");
-		
 	}
 
 	
@@ -36,12 +35,5 @@ public class Warlock extends Hero
 		
 	}
 	
-//	public static void main(String[] args) throws IOException
-//	{
-//		Warlock h = new Warlock();
-//		h.buildgetDeck()();
-//		for (int i = 0; i < h.getDeck().size(); i++) {
-//			System.out.println(i+1 +" "+h.getDeck().get(i));
-//		}
-//	}
+
 }
