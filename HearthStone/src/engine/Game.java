@@ -13,6 +13,7 @@ public class Game {
 		secondHero = p2;
 		currentHero = ((int) (Math.random() * 2) == 1) ? p1 : p2; // If 1 then p1, else if 0 then p2;
 		opponent = (currentHero.equals(firstHero)) ? secondHero : firstHero;
+		currentHero.setCurrentManaCrystals(1);
 	}
 
 	public Hero getCurrentHero() {
