@@ -15,7 +15,7 @@ public abstract class Hero {
 	private ArrayList<Card> deck;
 	private ArrayList<Minion> field;
 	private ArrayList<Card> hand;
-	private int fatigueDamage = 0;
+	private int fatigueDamage;
 
 //	public Hero()  
 //	{}
