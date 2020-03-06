@@ -31,6 +31,7 @@ public abstract class Hero {
 		this.deck = new ArrayList<Card>();
 		this.field = new ArrayList<Minion>();
 		this.hand = new ArrayList<Card>();
+		this.fatigueDamage = 0;
 		buildDeck();
 	}
 //setter & getters
