@@ -43,7 +43,8 @@ public abstract class Hero {
 	{
 		if(currentHP > 30)
 			this.currentHP = 30;
-		else
+		else if (currentHP <0)
+			this.currentHP = 0;
 		this.currentHP = currentHP;
 	}
 	public boolean isHeroPowerUsed() 
@@ -62,7 +63,8 @@ public abstract class Hero {
 	{
 		if(totalManaCrystals > 10)
 			this.totalManaCrystals = 10;
-		else
+		else if(totalManaCrystals<0)
+			this.totalManaCrystals = 0;
 			this.totalManaCrystals = totalManaCrystals;
 	}
 	public int getCurrentManaCrystals() 
@@ -73,7 +75,8 @@ public abstract class Hero {
 	{
 		if(currentManaCrystals > 10)
 			this.currentManaCrystals = 10;
-		else
+		else if (currentManaCrystals < 0)
+			this.currentManaCrystals = 0;
 			this.currentManaCrystals = currentManaCrystals;
 	}
 	public String getName() 
