@@ -35,6 +35,7 @@ public class Minion extends Card {
 			currentHP = maxHP;
 		else if (currentHP < 0)
 			this.currentHP = 0;
+		else
 			this.currentHP = currentHP;
 	}
 
