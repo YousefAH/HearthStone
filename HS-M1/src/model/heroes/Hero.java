@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import engine.ActionValidator;
 import model.cards.Card;
 import model.cards.Rarity;
 import model.cards.minions.Icehowl;
@@ -21,6 +22,10 @@ public abstract class Hero {
 	private ArrayList<Card> hand;
 	@SuppressWarnings("unused")
 	private int fatigueDamage;
+	HeroListener listener;
+	ActionValidator validator;
+
+	
 
 	public Hero(String name) throws IOException {
 		this.name = name;
@@ -162,5 +167,17 @@ public abstract class Hero {
 
 	public String getName() {
 		return name;
+	}
+	
+	public HeroListener getListener() {
+		return listener;
+	}
+
+	public void setListener(HeroListener listener) {
+		this.listener = listener;
+	}
+
+	public void setValidator(ActionValidator validator) {
+		this.validator = validator;
 	}
 }
