@@ -22,8 +22,8 @@ public abstract class Hero {
 	private ArrayList<Card> hand;
 	@SuppressWarnings("unused")
 	private int fatigueDamage;
-	HeroListener listener;
-	ActionValidator validator;
+	private HeroListener listener;
+	private ActionValidator validator;
 
 	
 

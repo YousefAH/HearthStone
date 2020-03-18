@@ -7,7 +7,12 @@ public class Game  {
 	private Hero secondHero;
 	private Hero currentHero;
 	private Hero opponent;
+	private GameListener listener;
 	
+	public void setListener(GameListener listener) {
+		this.listener = listener;
+	}
+
 	public Game(Hero p1, Hero p2)
 	{
 		firstHero=p1;
