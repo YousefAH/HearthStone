@@ -13,4 +13,5 @@ public interface ActionValidator
 	public void validatePlayingMinion(Minion minion) throws FullFieldException;
 	public void validateUsingHeroPower(Hero hero) throws NotEnoughManaException,HeroPowerAlreadyUsedException;
 	
+	//
 }
