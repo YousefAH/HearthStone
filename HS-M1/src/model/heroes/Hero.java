@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import engine.ActionValidator;
+import exceptions.*;
 import model.cards.Card;
 import model.cards.Rarity;
 import model.cards.minions.Icehowl;
@@ -108,6 +109,13 @@ public abstract class Hero {
 		}
 		return res;
 	}
+	
+	 public void useHeroPower() throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException, FullFieldException, CloneNotSupportedException
+	 {
+		 validator.validateUsingHeroPower(this);
+		 validator.validateTurn(this);
+		 currentManaCrystals -= 2;
+	 }
 
 	public int getCurrentHP() {
 		return currentHP;
@@ -146,8 +154,6 @@ public abstract class Hero {
 	public ArrayList<Minion> getField() {
 		return field;
 	}
-
-	
 
 	public ArrayList<Card> getHand() {
 		return hand;
