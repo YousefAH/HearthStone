@@ -116,7 +116,13 @@ public abstract class Hero {
 		 validator.validateTurn(this);
 		 currentManaCrystals -= 2;
 	 }
-
+	 
+	 
+	 public Card drawCard() throws FullHandException, CloneNotSupportedException
+	 {
+		 return new Icehowl();
+	 }
+	 
 	public int getCurrentHP() {
 		return currentHP;
 	}
