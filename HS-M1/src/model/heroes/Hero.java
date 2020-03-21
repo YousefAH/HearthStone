@@ -189,9 +189,9 @@ public abstract class Hero {
 		validator.validateTurn(this);
 		// If no exceptions:
 		s.performAction(field);
-		// decrease mana
+		// Decrease mana
 		currentManaCrystals -= ((Card) s).getManaCost();
-		// remove cards
+		// Remove card
 		hand.remove((Card) s);
 	}
 
@@ -200,9 +200,9 @@ public abstract class Hero {
 		validator.validateTurn(this);
 		// If no exceptions:
 		s.performAction(oppField, field);
-		// decrease mana
+		// Decrease mana
 		currentManaCrystals -= ((Card) s).getManaCost();
-		// remove cards
+		// Remove card
 		hand.remove((Card) s);
 	}
 
@@ -212,9 +212,9 @@ public abstract class Hero {
 		validator.validateTurn(this);
 		// If no exceptions:
 		s.performAction(m);
-		// decrease mana
+		// Decrease mana
 		currentManaCrystals -= ((Card) s).getManaCost();
-		// remove cards
+		// Remove card
 		hand.remove((Card) s);
 	}
 }
