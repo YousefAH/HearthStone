@@ -88,4 +88,30 @@ public class Minion extends Card implements Cloneable {
 		return divine;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Minion other = (Minion) obj;
+		if (attack != other.attack)
+			return false;
+		if (attacked != other.attacked)
+			return false;
+		if (currentHP != other.currentHP)
+			return false;
+		if (divine != other.divine)
+			return false;
+		if (maxHP != other.maxHP)
+			return false;
+		if (sleeping != other.sleeping)
+			return false;
+		if (taunt != other.taunt)
+			return false;
+		return true;
+	}
+	
 }

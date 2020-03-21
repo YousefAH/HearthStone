@@ -7,10 +7,9 @@ import java.util.ArrayList;
 
 import engine.ActionValidator;
 import exceptions.*;
-import model.cards.Card;
-import model.cards.Rarity;
-import model.cards.minions.Icehowl;
-import model.cards.minions.Minion;
+import model.cards.*;
+import model.cards.minions.*;
+import model.cards.spells.*;
 
 public abstract class Hero {
 	private String name;
@@ -25,8 +24,6 @@ public abstract class Hero {
 	private int fatigueDamage;
 	private HeroListener listener;
 	private ActionValidator validator;
-
-	
 
 	public Hero(String name) throws IOException {
 		this.name = name;
@@ -49,9 +46,7 @@ public abstract class Hero {
 			String n = line[0];
 			int m = Integer.parseInt(line[1]);
 			Rarity r = null;
-			switch (
-				(line[2])
-			) {
+			switch ((line[2])) {
 			case "b":
 				r = Rarity.BASIC;
 				break;
@@ -88,7 +83,7 @@ public abstract class Hero {
 		ArrayList<Minion> res = new ArrayList<Minion>();
 		int i = 0;
 		while (i < count) {
-			
+
 			int index = (int) (Math.random() * minions.size());
 			Minion minion = minions.get(index);
 			int occ = 0;
@@ -96,33 +91,28 @@ public abstract class Hero {
 				if (res.get(j).getName().equals(minion.getName()))
 					occ++;
 			}
-			if (occ == 0)
-			{
+			if (occ == 0) {
 				res.add(minion);
 				i++;
-			}
-			else if(occ==1 && minion.getRarity()!=Rarity.LEGENDARY)
-			{
+			} else if (occ == 1 && minion.getRarity() != Rarity.LEGENDARY) {
 				res.add(minion);
 				i++;
 			}
 		}
 		return res;
 	}
-	
-	 public void useHeroPower() throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException, FullFieldException, CloneNotSupportedException
-	 {
-		 validator.validateUsingHeroPower(this);
-		 validator.validateTurn(this);
-		 currentManaCrystals -= 2;
-	 }
-	 
-	 
-	 public Card drawCard() throws FullHandException, CloneNotSupportedException
-	 {
-		 return new Icehowl();
-	 }
-	 
+
+	public void useHeroPower() throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException,
+			FullHandException, FullFieldException, CloneNotSupportedException {
+		validator.validateUsingHeroPower(this);
+		validator.validateTurn(this);
+		currentManaCrystals -= 2;
+	}
+
+	public Card drawCard() throws FullHandException, CloneNotSupportedException {
+		return new Icehowl();
+	}
+
 	public int getCurrentHP() {
 		return currentHP;
 	}
@@ -133,7 +123,7 @@ public abstract class Hero {
 			this.currentHP = 30;
 		else if (this.currentHP <= 0) {
 			this.currentHP = 0;
-			
+
 		}
 	}
 
@@ -180,7 +170,7 @@ public abstract class Hero {
 	public String getName() {
 		return name;
 	}
-	
+
 	public HeroListener getListener() {
 		return listener;
 	}
@@ -192,4 +182,15 @@ public abstract class Hero {
 	public void setValidator(ActionValidator validator) {
 		this.validator = validator;
 	}
+
+	public void castSpell(FieldSpell s) throws NotYourTurnException, NotEnoughManaException {
+		validator.validateManaCost((Card) s);
+		validator.validateTurn(this);
+		//If no exceptions:
+		//decrease mana
+		s.performAction(field);
+		currentManaCrystals -= ((Card) s).getManaCost();
+		deck.remove((Card)s);
+	}
+
 }
