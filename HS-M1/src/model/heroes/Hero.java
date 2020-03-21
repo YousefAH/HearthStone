@@ -109,11 +109,82 @@ public abstract class Hero {
 		validator.validateTurn(this);
 		currentManaCrystals -= 2;
 	}
-
-	public Card drawCard() throws FullHandException, CloneNotSupportedException {
-		return new Icehowl();
+	
+	public void castSpell(FieldSpell s) throws NotYourTurnException, NotEnoughManaException {
+		validator.validateTurn(this);
+		validator.validateManaCost((Card) s);
+		// If no exceptions:
+		s.performAction(field);
+		// Decrease mana
+		currentManaCrystals -= ((Card) s).getManaCost();
+		// Remove card
+		hand.remove((Card) s);
 	}
 
+	public void castSpell(AOESpell s, ArrayList<Minion> oppField) throws NotYourTurnException, NotEnoughManaException {
+		validator.validateTurn(this);
+		validator.validateManaCost((Card) s);
+		// If no exceptions:
+		s.performAction(oppField, field);
+		// Decrease mana
+		currentManaCrystals -= ((Card) s).getManaCost();
+		// Remove card
+		hand.remove((Card) s);
+	}
+
+	public void castSpell(MinionTargetSpell s, Minion m)
+			throws NotYourTurnException, NotEnoughManaException, InvalidTargetException {
+		validator.validateTurn(this);
+		validator.validateManaCost((Card) s);
+		// If no exceptions:
+		s.performAction(m);
+		// Decrease mana
+		currentManaCrystals -= ((Card) s).getManaCost();
+		// Remove card
+		hand.remove((Card) s);
+	}
+
+	public void castSpell(HeroTargetSpell s, Hero h) throws NotYourTurnException, NotEnoughManaException {
+		validator.validateTurn(this);
+		validator.validateManaCost((Card) s);
+		// If no exceptions:
+		s.performAction(h);
+		// Decrease mana
+		currentManaCrystals -= ((Card) s).getManaCost();
+		// Remove card
+		hand.remove((Card) s);
+	}
+	
+	public void castSpell(LeechingSpell s, Minion m) throws NotYourTurnException,NotEnoughManaException
+	{
+		//check if card is playable
+		validator.validateTurn(this);
+		validator.validateManaCost((Card) s);
+		//lose mana
+		currentManaCrystals -= ((Card)s).getManaCost();
+		//activate the spell
+		s.performAction(m);
+		//remove from hand
+		hand.remove((Card) s);
+		
+	}
+	
+	public Card drawCard() throws FullHandException, CloneNotSupportedException 
+	{
+		if(deck.isEmpty()) 
+		{
+			currentHP -= fatigueDamage;
+			fatigueDamage++;
+		}
+		
+		return new Icehowl();
+	}
+	
+	public void endTurn() throws FullHandException, CloneNotSupportedException
+	{
+		listener.endTurn();
+	}
+	
 	public int getCurrentHP() {
 		return currentHP;
 	}
@@ -184,48 +255,5 @@ public abstract class Hero {
 		this.validator = validator;
 	}
 
-	public void castSpell(FieldSpell s) throws NotYourTurnException, NotEnoughManaException {
-		validator.validateTurn(this);
-		validator.validateManaCost((Card) s);
-		// If no exceptions:
-		s.performAction(field);
-		// Decrease mana
-		currentManaCrystals -= ((Card) s).getManaCost();
-		// Remove card
-		hand.remove((Card) s);
-	}
-
-	public void castSpell(AOESpell s, ArrayList<Minion> oppField) throws NotYourTurnException, NotEnoughManaException {
-		validator.validateTurn(this);
-		validator.validateManaCost((Card) s);
-		// If no exceptions:
-		s.performAction(oppField, field);
-		// Decrease mana
-		currentManaCrystals -= ((Card) s).getManaCost();
-		// Remove card
-		hand.remove((Card) s);
-	}
-
-	public void castSpell(MinionTargetSpell s, Minion m)
-			throws NotYourTurnException, NotEnoughManaException, InvalidTargetException {
-		validator.validateTurn(this);
-		validator.validateManaCost((Card) s);
-		// If no exceptions:
-		s.performAction(m);
-		// Decrease mana
-		currentManaCrystals -= ((Card) s).getManaCost();
-		// Remove card
-		hand.remove((Card) s);
-	}
-
-	public void castSpell(HeroTargetSpell s, Hero h) throws NotYourTurnException, NotEnoughManaException {
-		validator.validateTurn(this);
-		validator.validateManaCost((Card) s);
-		// If no exceptions:
-		s.performAction(h);
-		// Decrease mana
-		currentManaCrystals -= ((Card) s).getManaCost();
-		// Remove card
-		hand.remove((Card) s);
-	}
+	
 }
