@@ -3,7 +3,7 @@ package model.heroes;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-
+import exceptions.*;
 import model.cards.Rarity;
 import model.cards.minions.Minion;
 import model.cards.spells.KillCommand;
@@ -30,6 +30,12 @@ public class Hunter extends Hero {
 		getDeck().add(krush);
 		Collections.shuffle(getDeck());
 	}
+	
+	 public void useHeroPower(Hero opp) throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException, FullFieldException, CloneNotSupportedException
+	 {
+		 super.useHeroPower();
+		 opp.setCurrentHP(opp.getCurrentHP()-2);
+	 }
 	
 	
 }

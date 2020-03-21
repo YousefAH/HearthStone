@@ -1,5 +1,9 @@
 package model.cards.spells;
 
-public interface FieldSpell {
+import java.util.ArrayList;
 
+import model.cards.minions.Minion;
+
+public interface FieldSpell {
+	 public void performAction(ArrayList<Minion>field); 
 }
