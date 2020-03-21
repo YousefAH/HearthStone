@@ -185,8 +185,8 @@ public abstract class Hero {
 	}
 
 	public void castSpell(FieldSpell s) throws NotYourTurnException, NotEnoughManaException {
-		validator.validateManaCost((Card) s);
 		validator.validateTurn(this);
+		validator.validateManaCost((Card) s);
 		// If no exceptions:
 		s.performAction(field);
 		// Decrease mana
@@ -196,8 +196,8 @@ public abstract class Hero {
 	}
 
 	public void castSpell(AOESpell s, ArrayList<Minion> oppField) throws NotYourTurnException, NotEnoughManaException {
-		validator.validateManaCost((Card) s);
 		validator.validateTurn(this);
+		validator.validateManaCost((Card) s);
 		// If no exceptions:
 		s.performAction(oppField, field);
 		// Decrease mana
@@ -208,10 +208,21 @@ public abstract class Hero {
 
 	public void castSpell(MinionTargetSpell s, Minion m)
 			throws NotYourTurnException, NotEnoughManaException, InvalidTargetException {
-		validator.validateManaCost((Card) s);
 		validator.validateTurn(this);
+		validator.validateManaCost((Card) s);
 		// If no exceptions:
 		s.performAction(m);
+		// Decrease mana
+		currentManaCrystals -= ((Card) s).getManaCost();
+		// Remove card
+		hand.remove((Card) s);
+	}
+
+	public void castSpell(HeroTargetSpell s, Hero h) throws NotYourTurnException, NotEnoughManaException {
+		validator.validateTurn(this);
+		validator.validateManaCost((Card) s);
+		// If no exceptions:
+		s.performAction(h);
 		// Decrease mana
 		currentManaCrystals -= ((Card) s).getManaCost();
 		// Remove card
