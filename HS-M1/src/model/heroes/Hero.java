@@ -10,6 +10,7 @@ import exceptions.*;
 import model.cards.*;
 import model.cards.minions.*;
 import model.cards.spells.*;
+import engine.Game;
 
 public abstract class Hero {
 	private String name;
@@ -186,11 +187,34 @@ public abstract class Hero {
 	public void castSpell(FieldSpell s) throws NotYourTurnException, NotEnoughManaException {
 		validator.validateManaCost((Card) s);
 		validator.validateTurn(this);
-		//If no exceptions:
-		//decrease mana
+		// If no exceptions:
 		s.performAction(field);
+		// decrease mana
 		currentManaCrystals -= ((Card) s).getManaCost();
-		deck.remove((Card)s);
+		// remove cards
+		hand.remove((Card) s);
 	}
 
+	public void castSpell(AOESpell s, ArrayList<Minion> oppField) throws NotYourTurnException, NotEnoughManaException {
+		validator.validateManaCost((Card) s);
+		validator.validateTurn(this);
+		// If no exceptions:
+		s.performAction(oppField, field);
+		// decrease mana
+		currentManaCrystals -= ((Card) s).getManaCost();
+		// remove cards
+		hand.remove((Card) s);
+	}
+
+	public void castSpell(MinionTargetSpell s, Minion m)
+			throws NotYourTurnException, NotEnoughManaException, InvalidTargetException {
+		validator.validateManaCost((Card) s);
+		validator.validateTurn(this);
+		// If no exceptions:
+		s.performAction(m);
+		// decrease mana
+		currentManaCrystals -= ((Card) s).getManaCost();
+		// remove cards
+		hand.remove((Card) s);
+	}
 }
