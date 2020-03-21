@@ -18,7 +18,6 @@ public class CurseOfWeakness extends Spell implements AOESpell {
 //			if(m.getCurrentHP()==0)
 //				m.
 		}
-
 	}
 
 }
