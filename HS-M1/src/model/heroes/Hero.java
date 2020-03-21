@@ -169,10 +169,22 @@ public abstract class Hero {
 		
 	}
 	
-	public Card drawCard() throws FullHandException, CloneNotSupportedException {
+	public Card drawCard() throws FullHandException, CloneNotSupportedException 
+	{
+		if(deck.isEmpty()) 
+		{
+			currentHP -= fatigueDamage;
+			fatigueDamage++;
+		}
+		
 		return new Icehowl();
 	}
-
+	
+	public void endTurn() throws FullHandException, CloneNotSupportedException
+	{
+		listener.endTurn();
+	}
+	
 	public int getCurrentHP() {
 		return currentHP;
 	}
