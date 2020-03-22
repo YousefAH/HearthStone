@@ -15,7 +15,7 @@ public class ShadowWordDeath extends Spell implements MinionTargetSpell {
 	public void performAction(Minion m) throws InvalidTargetException {
 		if(m.getAttack()<5) // Needs to be proven
 			throw new InvalidTargetException("The attack of this minion is less than 5.");
-//		m.minionListener.onDeath();
+		m.getListener().onMinionDeath(m);
 		
 	}
 }
