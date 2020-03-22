@@ -1,7 +1,8 @@
 package model.cards.minions;
 
-import model.cards.Card;
-import model.cards.Rarity;
+import exceptions.InvalidTargetException;
+import model.cards.*;
+import model.heroes.Hero;
 
 public class Minion extends Card implements Cloneable {
 	private int attack;
@@ -11,6 +12,7 @@ public class Minion extends Card implements Cloneable {
 	private boolean divine;
 	private boolean sleeping;
 	private boolean attacked;
+	private MinionListener listener;
 
 	public Minion(String name, int manaCost, Rarity rarity, int attack, int maxHP, boolean taunt, boolean divine,
 			boolean charge) {
@@ -22,6 +24,34 @@ public class Minion extends Card implements Cloneable {
 		this.divine = divine;
 		if (!charge)
 			this.sleeping = true;
+	}
+
+	public void attack(Minion target) {
+		if (target.divine) {
+			if (!divine) {
+				this.setCurrentHP(currentHP - target.attack);
+				target.setCurrentHP(target.currentHP - this.attack);
+			}
+			target.divine = false;
+		} else {
+			this.setCurrentHP(currentHP - target.attack);
+			target.setCurrentHP(target.currentHP - this.attack);
+		}
+		attacked = true;
+	}
+
+	public void attack(Hero target) throws InvalidTargetException {
+		if (super.getName() == "Icehowl") {
+			throw new InvalidTargetException("You cannot attack heros!");
+		} else {
+			target.setCurrentHP(target.getCurrentHP() - this.attack);
+		}
+	}
+
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+		// TODO Auto-generated method stub
+		return (Minion) super.clone();
 	}
 
 	public boolean isTaunt() {
@@ -88,6 +118,10 @@ public class Minion extends Card implements Cloneable {
 		return divine;
 	}
 
+	public void setListener(MinionListener listener) {
+		this.listener = listener;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -113,5 +147,5 @@ public class Minion extends Card implements Cloneable {
 			return false;
 		return true;
 	}
-	
+
 }
