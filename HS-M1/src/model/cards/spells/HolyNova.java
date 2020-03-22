@@ -23,8 +23,12 @@ public class HolyNova extends Spell implements AOESpell {
 		 while (itr.hasNext()) 
 	     { 
 			Minion check = (Minion)itr.next();
-			if(check.getCurrentHP()==0)
+			if(check.getCurrentHP()==0) 
+			{
+				//minion listener should be notified somehow
 				itr.remove();
+			}
+				
 	     } 
 		
 		
