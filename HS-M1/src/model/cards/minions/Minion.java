@@ -146,7 +146,6 @@ public class Minion extends Card implements Cloneable {
 		if (taunt != other.taunt)
 			return false;
 		return true;
-
 	}
 
 }
