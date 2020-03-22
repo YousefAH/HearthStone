@@ -11,6 +11,7 @@ public class Minion extends Card implements Cloneable {
 	private boolean divine;
 	private boolean sleeping;
 	private boolean attacked;
+	private MinionListener listener;
 
 	public Minion(String name, int manaCost, Rarity rarity, int attack, int maxHP, boolean taunt, boolean divine,
 			boolean charge) {
