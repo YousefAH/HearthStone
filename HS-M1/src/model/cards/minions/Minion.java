@@ -122,6 +122,10 @@ public class Minion extends Card implements Cloneable {
 		this.listener = listener;
 	}
 
+	public MinionListener getListener() {
+		return listener;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
