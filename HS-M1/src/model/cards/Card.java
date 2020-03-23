@@ -1,6 +1,12 @@
 package model.cards;
 
-public abstract class Card {
+public abstract class Card implements Cloneable{
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+		// TODO Auto-generated method stub
+		return (Card) super.clone();
+	}
+
 	private String name;
 	private int manaCost;
 	private Rarity rarity;
