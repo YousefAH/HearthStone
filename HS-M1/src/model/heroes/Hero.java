@@ -184,7 +184,26 @@ public abstract class Hero {
 	{
 		listener.endTurn();
 	}
-	
+	 public void playMinion(Minion m) throws NotYourTurnException, NotEnoughManaException, FullFieldException
+	 {
+		validator.validateManaCost((Card)m);
+		validator.validatePlayingMinion(m);
+		validator.validateTurn(this);
+		hand.remove(m);
+		field.add(m);
+	 }
+	 public void attackWithMinion(Minion attacker, Minion target) throws CannotAttackException, 
+	 NotYourTurnException, TauntBypassException, InvalidTargetException, NotSummonedException{
+		 validator.validateTurn(this);
+		 validator.validateAttack(attacker, target);
+		 attacker.attack(target);
+	 }
+	 public void attackWithMinion(Minion attacker, Hero target) throws CannotAttackException, 
+	 NotYourTurnException, TauntBypassException, InvalidTargetException, NotSummonedException{
+		 validator.validateTurn(this);
+		 validator.validateAttack(attacker, target);
+		 attacker.attack(target);
+	 }
 	public int getCurrentHP() {
 		return currentHP;
 	}
