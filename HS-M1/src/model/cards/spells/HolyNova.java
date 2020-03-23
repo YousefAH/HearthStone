@@ -25,8 +25,7 @@ public class HolyNova extends Spell implements AOESpell {
 			Minion check = (Minion)itr.next();
 			if(check.getCurrentHP()==0) 
 			{
-				//minion listener should be notified somehow
-				itr.remove();
+				
 			}
 				
 	     } 

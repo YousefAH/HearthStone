@@ -12,7 +12,7 @@ import model.cards.minions.*;
 import model.cards.spells.*;
 import engine.Game;
 
-public abstract class Hero {
+public abstract class Hero implements MinionListener{
 	private String name;
 	private int currentHP;
 	private boolean heroPowerUsed;
