@@ -26,6 +26,7 @@ public class HolyNova extends Spell implements AOESpell {
 			if(check.getCurrentHP()==0) 
 			{
 				
+				itr.remove();
 			}
 				
 	     } 

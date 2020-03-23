@@ -36,6 +36,9 @@ public class Hunter extends Hero {
 		 super.useHeroPower();
 		 opp.setCurrentHP(opp.getCurrentHP()-2);
 	 }
+
+	
+	
 	
 	
 }

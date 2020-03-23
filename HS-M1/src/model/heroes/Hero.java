@@ -204,6 +204,11 @@ public abstract class Hero implements MinionListener{
 		 validator.validateAttack(attacker, target);
 		 attacker.attack(target);
 	 }
+	 
+	 public void onMinionDeath(Minion m) 
+	 {
+		 field.remove(m);
+	 }
 	public int getCurrentHP() {
 		return currentHP;
 	}
@@ -262,9 +267,6 @@ public abstract class Hero implements MinionListener{
 		return name;
 	}
 
-	public HeroListener getListener() {
-		return listener;
-	}
 
 	public void setListener(HeroListener listener) {
 		this.listener = listener;
