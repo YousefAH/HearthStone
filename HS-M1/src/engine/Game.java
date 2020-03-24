@@ -27,7 +27,7 @@ public class Game implements ActionValidator, HeroListener  {
 		this.listener = listener;
 	}
 
-	public Game(Hero p1, Hero p2)
+	public Game(Hero p1, Hero p2) throws FullHandException, CloneNotSupportedException
 	{
 		firstHero=p1;
 		secondHero=p2;
@@ -37,6 +37,13 @@ public class Game implements ActionValidator, HeroListener  {
 		opponent= currentHero==firstHero?secondHero:firstHero;
 		currentHero.setCurrentManaCrystals(1);
 		currentHero.setTotalManaCrystals(1);
+		for (int i = 0; i < 3; i++) 
+		{
+			currentHero.drawCard();
+			opponent.drawCard();
+		}
+		opponent.drawCard();
+		
 		
 	}
 
