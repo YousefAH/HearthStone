@@ -24,7 +24,7 @@ public abstract class Hero implements MinionListener{
 	private HeroListener listener;
 	private ActionValidator validator;
 
-	public Hero(String name) throws IOException {
+	public Hero(String name) throws IOException, CloneNotSupportedException {
 		this.name = name;
 		currentHP = 30;
 		deck = new ArrayList<Card>();
@@ -33,7 +33,7 @@ public abstract class Hero implements MinionListener{
 		buildDeck();
 	}
 
-	public abstract void buildDeck() throws IOException;
+	public abstract void buildDeck() throws IOException, CloneNotSupportedException;
 
 	public static final ArrayList<Minion> getAllNeutralMinions(String filePath) throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader(filePath));
@@ -268,6 +268,10 @@ public abstract class Hero implements MinionListener{
 
 	public void setListener(HeroListener listener) {
 		this.listener = listener;
+	}
+
+	public HeroListener getListener() {
+		return listener;
 	}
 
 	public void setValidator(ActionValidator validator) {

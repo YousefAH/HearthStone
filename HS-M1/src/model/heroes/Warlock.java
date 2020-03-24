@@ -18,7 +18,7 @@ import model.cards.spells.TwistingNether;
 
 public class Warlock extends Hero {
 
-	public Warlock() throws IOException {
+	public Warlock() throws IOException, CloneNotSupportedException {
 		super("Gul'dan");
 	}
 

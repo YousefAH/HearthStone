@@ -11,7 +11,7 @@ import model.cards.spells.MultiShot;
 
 public class Hunter extends Hero {
 
-	public Hunter() throws IOException {
+	public Hunter() throws IOException, CloneNotSupportedException {
 		super("Rexxar");
 	}
 
