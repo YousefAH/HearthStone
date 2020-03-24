@@ -12,7 +12,7 @@ import model.cards.minions.*;
 import model.cards.spells.*;
 import engine.Game;
 
-public abstract class Hero {
+public abstract class Hero implements MinionListener {
 	private String name;
 	private int currentHP;
 	private boolean heroPowerUsed;
@@ -214,7 +214,7 @@ public abstract class Hero {
 			this.currentHP = 30;
 		else if (this.currentHP <= 0) {
 			this.currentHP = 0;
-
+			listener.onHeroDeath();
 		}
 	}
 
@@ -272,6 +272,9 @@ public abstract class Hero {
 
 	public void setValidator(ActionValidator validator) {
 		this.validator = validator;
+	}
+	public void onMinionDeath(Minion m) {
+		field.remove(m);
 	}
 
 	
