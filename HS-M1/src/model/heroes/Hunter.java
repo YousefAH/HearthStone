@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import exceptions.*;
+import model.cards.Card;
 import model.cards.Rarity;
 import model.cards.minions.Minion;
 import model.cards.spells.KillCommand;
@@ -28,6 +29,14 @@ public class Hunter extends Hero {
 		Minion krush=(new Minion("King Krush", 9, Rarity.LEGENDARY, 8, 8, false, false, true));
 		
 		getDeck().add(krush);
+		
+		for (int i = 0; i < getDeck().size(); i++) 
+		{
+			Card c = getDeck().get(i);
+			if(c instanceof Minion)
+				((Minion) c).setListener(this);
+		}
+		
 		Collections.shuffle(getDeck());
 	}
 	

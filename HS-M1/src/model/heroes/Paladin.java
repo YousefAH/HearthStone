@@ -9,6 +9,7 @@ import exceptions.FullHandException;
 import exceptions.HeroPowerAlreadyUsedException;
 import exceptions.NotEnoughManaException;
 import exceptions.NotYourTurnException;
+import model.cards.Card;
 import model.cards.Rarity;
 import model.cards.minions.Minion;
 import model.cards.spells.LevelUp;
@@ -32,6 +33,14 @@ public class Paladin extends Hero {
 		Minion tirion=new Minion("Tirion Fordring", 4, Rarity.LEGENDARY, 6, 6, true, true, false);
 	
 		getDeck().add(tirion);
+		
+		for (int i = 0; i < getDeck().size(); i++) 
+		{
+			Card c = getDeck().get(i);
+			if(c instanceof Minion)
+				((Minion) c).setListener(this);
+		}
+		
 		Collections.shuffle(getDeck());
 	}
 	public void useHeroPower(Hero opp) throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException, FullFieldException, CloneNotSupportedException

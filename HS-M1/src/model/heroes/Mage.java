@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import exceptions.*;
+import model.cards.Card;
 import model.cards.Rarity;
 import model.cards.minions.Minion;
 import model.cards.spells.*;
@@ -27,6 +28,14 @@ public class Mage extends Hero {
 		Minion kalycgos = (new Minion("Kalycgos", 10, Rarity.LEGENDARY, 4, 12, false, false, false));
 		;
 		getDeck().add(kalycgos);
+		
+		for (int i = 0; i < getDeck().size(); i++) 
+		{
+			Card c = getDeck().get(i);
+			if(c instanceof Minion)
+				((Minion) c).setListener(this);
+		}
+		
 		Collections.shuffle(getDeck());
 
 	}

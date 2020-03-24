@@ -9,6 +9,7 @@ import exceptions.FullHandException;
 import exceptions.HeroPowerAlreadyUsedException;
 import exceptions.NotEnoughManaException;
 import exceptions.NotYourTurnException;
+import model.cards.Card;
 import model.cards.Rarity;
 import model.cards.minions.Minion;
 import model.cards.spells.DivineSpirit;
@@ -34,6 +35,14 @@ public class Priest extends Hero {
 		Minion velen=new Minion("Prophet Velen", 7, Rarity.LEGENDARY, 7, 7, false, false, false);
 		
 		getDeck().add(velen);
+		
+		for (int i = 0; i < getDeck().size(); i++) 
+		{
+			Card c = getDeck().get(i);
+			if(c instanceof Minion)
+				((Minion) c).setListener(this);
+		}
+		
 		Collections.shuffle(getDeck());
 
 	}
