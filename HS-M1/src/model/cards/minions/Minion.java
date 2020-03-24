@@ -27,19 +27,20 @@ public class Minion extends Card implements Cloneable {
 	}
 
 	public void attack(Minion target) {
-		if(attacked==false) {
+		if (attacked == false) {
 			if (target.divine) {
 				if (!divine) {
 					this.setCurrentHP(currentHP - target.attack);
-					target.setCurrentHP(target.currentHP - this.attack);
 				}
-				target.divine = false;
 			} else {
-				this.setCurrentHP(currentHP - target.attack);
+				if(!divine)
+					this.setCurrentHP(currentHP - target.attack);
 				target.setCurrentHP(target.currentHP - this.attack);
 			}
+			target.divine = false;
+			divine = false;
 			attacked = true;
-		}	
+		}
 	}
 
 	public void attack(Hero target) throws InvalidTargetException {
@@ -78,7 +79,8 @@ public class Minion extends Card implements Cloneable {
 			this.currentHP = maxHP;
 		else if (this.currentHP <= 0) {
 			this.currentHP = 0;
-			listener.onMinionDeath(this);
+			if (listener != null) // Added to check presence of listener
+				listener.onMinionDeath(this);
 		}
 	}
 
@@ -120,8 +122,7 @@ public class Minion extends Card implements Cloneable {
 		return divine;
 	}
 
-	public void setListener(MinionListener listener) 
-	{
+	public void setListener(MinionListener listener) {
 		this.listener = listener;
 	}
 
