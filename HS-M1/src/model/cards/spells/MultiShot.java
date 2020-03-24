@@ -42,8 +42,6 @@ public class MultiShot extends Spell implements AOESpell {
 
 	public void dealDamageBy3(Minion m) {
 		m.setCurrentHP(m.getCurrentHP() - 3);
-		if (m.getCurrentHP() == 0)
-			m.getListener().onMinionDeath(m);
 	}
 
 }
