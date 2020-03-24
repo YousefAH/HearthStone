@@ -19,17 +19,6 @@ public class HolyNova extends Spell implements AOESpell {
 		{
 			oppField.get(i).setCurrentHP(oppField.get(i).getCurrentHP()-2);
 		}
-		Iterator itr = oppField.iterator();
-		 while (itr.hasNext()) 
-	     { 
-			Minion check = (Minion)itr.next();
-			if(check.getCurrentHP()==0) 
-			{
-				
-				itr.remove();
-			}
-				
-	     } 
 		
 		
 		for (int i = 0; i < curField.size(); i++) 
