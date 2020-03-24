@@ -120,12 +120,9 @@ public class Minion extends Card implements Cloneable {
 		return divine;
 	}
 
-	public void setListener(MinionListener listener) {
+	public void setListener(MinionListener listener) 
+	{
 		this.listener = listener;
-	}
-
-	public MinionListener getListener() {
-		return listener;
 	}
 
 	@Override

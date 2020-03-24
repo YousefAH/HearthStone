@@ -12,7 +12,11 @@ import model.cards.minions.*;
 import model.cards.spells.*;
 import engine.Game;
 
+<<<<<<< HEAD
 public abstract class Hero implements MinionListener {
+=======
+public abstract class Hero implements MinionListener{
+>>>>>>> branch 'master' of https://github.com/YousefAH/HearthStone
 	private String name;
 	private int currentHP;
 	private boolean heroPowerUsed;
@@ -204,6 +208,11 @@ public abstract class Hero implements MinionListener {
 		 validator.validateAttack(attacker, target);
 		 attacker.attack(target);
 	 }
+	 
+	 public void onMinionDeath(Minion m) 
+	 {
+		 field.remove(m);
+	 }
 	public int getCurrentHP() {
 		return currentHP;
 	}
@@ -262,9 +271,6 @@ public abstract class Hero implements MinionListener {
 		return name;
 	}
 
-	public HeroListener getListener() {
-		return listener;
-	}
 
 	public void setListener(HeroListener listener) {
 		this.listener = listener;
