@@ -169,6 +169,7 @@ public abstract class Hero implements MinionListener{
 	
 	public Card drawCard() throws FullHandException, CloneNotSupportedException 
 	{
+		Minion chro = new Minion("Chromaggus", 8, Rarity.LEGENDARY, 6, 8, false, false, false);
 		
 		if(deck.isEmpty()) 
 		{
@@ -178,12 +179,21 @@ public abstract class Hero implements MinionListener{
 		}
 		
 		Card m = (Card)deck.get(0).clone();
-		if(hand.size()>7)
+		if(hand.size()>10)
 			throw new FullHandException(m);
 		hand.add(m);
 		deck.remove(0);
+			
 		if(deck.isEmpty() && fatigueDamage == 0)
 			fatigueDamage = 1;
+		
+		//chromaggus ability
+		if(field.contains(chro))
+		{
+			if(hand.size()<10)
+				hand.add((Card)m.clone());
+		}
+		
 		return m;
 	}
 	
