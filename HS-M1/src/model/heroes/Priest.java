@@ -1,6 +1,7 @@
 package model.heroes;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -50,10 +51,14 @@ public class Priest extends Hero {
 	public void useHeroPower(Object target) throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException, FullFieldException, CloneNotSupportedException
 	 {
 		super.useHeroPower();
+		Minion v = new Minion("Prophet Velen", 7, Rarity.LEGENDARY, 7, 7, false,false,false);
+		int p = 2;
+		if(getField().contains(v))
+			p = 8;
 		if(target instanceof Minion)
-			((Minion)target).setCurrentHP(((Minion)target).getCurrentHP()+2);
+			((Minion)target).setCurrentHP(((Minion)target).getCurrentHP()+p);
 		else if(target instanceof Hero)
-			((Hero)target).setCurrentHP(((Hero)target).getCurrentHP()+2);
+			((Hero)target).setCurrentHP(((Hero)target).getCurrentHP()+p);
 	 }
 
 }
