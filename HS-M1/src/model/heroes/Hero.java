@@ -196,6 +196,7 @@ public abstract class Hero implements MinionListener{
 		validator.validatePlayingMinion(m);
 		validator.validateTurn(this);
 		hand.remove(m);
+		m.setListener(this);
 		field.add(m);
 	 }
 	 public void attackWithMinion(Minion attacker, Minion target) throws CannotAttackException, 
