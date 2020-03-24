@@ -5,12 +5,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import engine.ActionValidator;
+import engine.*;
 import exceptions.*;
 import model.cards.*;
 import model.cards.minions.*;
 import model.cards.spells.*;
-import engine.Game;
 public abstract class Hero implements MinionListener{
 
 	private String name;
@@ -21,7 +20,6 @@ public abstract class Hero implements MinionListener{
 	private ArrayList<Card> deck;
 	private ArrayList<Minion> field;
 	private ArrayList<Card> hand;
-	@SuppressWarnings("unused")
 	private int fatigueDamage;
 	private HeroListener listener;
 	private ActionValidator validator;
