@@ -7,7 +7,7 @@ import model.cards.minions.Minion;
 
 public class CurseOfWeakness extends Spell implements AOESpell {
 
-	public CurseOfWeakness() {
+	public CurseOfWeakness()  {
 		super("Curse of Weakness", 2, Rarity.RARE);
 
 	}
@@ -17,5 +17,4 @@ public class CurseOfWeakness extends Spell implements AOESpell {
 			m.setCurrentHP(m.getCurrentHP() - 2);
 		}
 	}
-
 }

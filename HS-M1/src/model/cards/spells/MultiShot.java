@@ -40,7 +40,7 @@ public class MultiShot extends Spell implements AOESpell {
 		}
 	}
 
-	public void dealDamageBy3(Minion m) {
+	public void dealDamageBy3(Minion m)  {
 		m.setCurrentHP(m.getCurrentHP() - 3);
 	}
 

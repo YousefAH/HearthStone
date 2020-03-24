@@ -7,7 +7,7 @@ import model.heroes.Hero;
 
 public class KillCommand extends Spell implements MinionTargetSpell, HeroTargetSpell {
 
-	public KillCommand() {
+	public KillCommand()  {
 		super("Kill Command", 3, Rarity.COMMON);
 		
 	}
