@@ -122,6 +122,7 @@ public class Game implements ActionValidator, HeroListener  {
 	}
 	public void endTurn() throws FullHandException, CloneNotSupportedException {
 		opponent= currentHero==firstHero?firstHero:secondHero;
+		currentHero = currentHero==firstHero?secondHero:firstHero;
 		int x = currentHero.getTotalManaCrystals()+1;
 		currentHero.setCurrentManaCrystals(x);
 		currentHero.setTotalManaCrystals(x);
