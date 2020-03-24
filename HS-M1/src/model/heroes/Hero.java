@@ -172,8 +172,6 @@ public abstract class Hero implements MinionListener{
 		
 		if(deck.isEmpty()) 
 		{
-			if(fatigueDamage == 0)
-				fatigueDamage = 1;
 			currentHP -= fatigueDamage;
 			fatigueDamage++;
 			return new Minion("empty", 1, Rarity.BASIC, 1, 1, false, false, false);
@@ -184,7 +182,8 @@ public abstract class Hero implements MinionListener{
 			throw new FullHandException(m);
 		hand.add(m);
 		deck.remove(0);
-		
+		if(deck.isEmpty() && fatigueDamage == 0)
+			fatigueDamage = 1;
 		return m;
 	}
 	
