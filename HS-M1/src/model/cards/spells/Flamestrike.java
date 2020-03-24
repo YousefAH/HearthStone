@@ -20,15 +20,6 @@ public class Flamestrike extends Spell implements AOESpell {
 		{
 			oppField.get(i).setCurrentHP(oppField.get(i).getCurrentHP()-4);
 		}
-		Iterator itr = oppField.iterator();
-		 while (itr.hasNext()) 
-	     { 
-			Minion check = (Minion)itr.next();
-			if(check.getCurrentHP()==0) 
-			{
-				//minion listener should be notified somehow
-				itr.remove();
-			}
-	     }
+		
 	}
 }
