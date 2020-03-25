@@ -243,8 +243,7 @@ public abstract class Hero implements MinionListener{
 	 
 	 public void onMinionDeath(Minion m) 
 	 {
-		 field.remove(m);
-		 
+		 getField().remove(m); 
 	 }
 	public int getCurrentHP() {
 		return currentHP;
