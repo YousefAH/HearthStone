@@ -10,8 +10,12 @@ public class Pyroblast extends Spell implements HeroTargetSpell, MinionTargetSpe
 	{
 		super("Pyroblast", 10, Rarity.EPIC);
 	}
-	public void performAction(Minion m) throws InvalidTargetException {
-		m.setCurrentHP(m.getCurrentHP()-10);
+	public void performAction(Minion m) throws InvalidTargetException 
+	{
+		if(m.isDivine())
+			m.setDivine(false);
+		else
+			m.setCurrentHP(m.getCurrentHP()-10);
 	}
 	public void performAction(Hero h) {
 		h.setCurrentHP(h.getCurrentHP()-10);
