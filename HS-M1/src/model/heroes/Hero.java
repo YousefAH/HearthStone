@@ -181,7 +181,7 @@ public abstract class Hero implements MinionListener{
 		}
 		
 		Card m = (Card)deck.get(0).clone();
-		if(hand.size()>10)
+		if(hand.size()>=10)
 			throw new FullHandException(m);
 
 		hand.add(m);
