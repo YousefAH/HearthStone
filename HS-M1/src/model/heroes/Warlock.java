@@ -72,7 +72,7 @@ public class Warlock extends Hero {
 	
 	public void useHeroPower() throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException,FullHandException, FullFieldException, CloneNotSupportedException {
 		super.useHeroPower();
-		Card c = drawCard_withPower();
+	    drawCard_withPower();
 		setCurrentHP(getCurrentHP() - 2);
 	}
 

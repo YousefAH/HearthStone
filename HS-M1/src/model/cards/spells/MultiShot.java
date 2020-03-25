@@ -18,30 +18,27 @@ public class MultiShot extends Spell implements AOESpell {
 		if (oppField.isEmpty())
 			return;
 
-		boolean hasOneMinion = oppField.size() == 1;
-		Minion m1; // To be damaged
-		Minion m2; // To be damaged
-		int idx = (int) (Math.random() * oppField.size()); // For Random index
-
-		m1 = oppField.get(idx);
-		dealDamageBy3(m1);
-
-		if (hasOneMinion)
-			return;
-
-		while (true) {
-			idx = (int) (Math.random() * oppField.size());
-			m2 = oppField.get(idx);
-			if (m2 == m1) // If same minion repeat again
-				continue;
-			// Else
-			dealDamageBy3(m2);
+		if(oppField.size()==1) 
+		{
+			oppField.get(0).setCurrentHP(oppField.get(0).getCurrentHP()-3);
 			return;
 		}
+		
+		int n1 = (int)(Math.random() *oppField.size()), n2;
+		do 
+		{
+			n2 = (int)(Math.random() *oppField.size());
+		}while(n1==n2);
+		
+		if(oppField.get(n1).isDivine())
+			oppField.get(n1).setDivine(false);
+		else
+			oppField.get(n1).setCurrentHP(oppField.get(n1).getCurrentHP()-3);
+		if(oppField.get(n2).isDivine())
+			oppField.get(n2).setDivine(false);
+		else
+			oppField.get(n2).setCurrentHP(oppField.get(n2).getCurrentHP()-3);
 	}
 
-	public void dealDamageBy3(Minion m)  {
-		m.setCurrentHP(m.getCurrentHP() - 3);
-	}
 
 }
