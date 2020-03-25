@@ -49,6 +49,7 @@ public class Minion extends Card implements Cloneable {
 		} else {
 			target.setCurrentHP(target.getCurrentHP() - this.attack);
 		}
+		attacked = true;
 	}
 
 	@Override

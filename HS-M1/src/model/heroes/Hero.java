@@ -235,12 +235,14 @@ public abstract class Hero implements MinionListener{
 		 validator.validateTurn(this);
 		 validator.validateAttack(attacker, target);
 		 attacker.attack(target);
+		 attacker.setAttacked(true);
 	 }
 	 public void attackWithMinion(Minion attacker, Hero target) throws CannotAttackException, 
 	 NotYourTurnException, TauntBypassException, InvalidTargetException, NotSummonedException{
 		 validator.validateTurn(this);
 		 validator.validateAttack(attacker, target);
 		 attacker.attack(target);
+		 attacker.setAttacked(true);
 	 }
 	 
 	 public void onMinionDeath(Minion m) 
