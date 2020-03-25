@@ -106,6 +106,7 @@ public abstract class Hero implements MinionListener{
 		validator.validateUsingHeroPower(this);
 		validator.validateTurn(this);
 		currentManaCrystals -= 2;
+		heroPowerUsed = true;
 	}
 	
 	public void castSpell(FieldSpell s) throws NotYourTurnException, NotEnoughManaException {
