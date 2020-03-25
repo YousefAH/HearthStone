@@ -31,15 +31,22 @@ public class MultiShot extends Spell implements AOESpell {
 		}while(n1==n2);
 		
 		
-		if(oppField.get(n1).isDivine())
-			oppField.get(n1).setDivine(false);
+		if(n1>n2)
+			damage2Minions(n1, n2, oppField);
 		else
-			oppField.get(n1).setCurrentHP(oppField.get(n1).getCurrentHP()-3);
-		if(oppField.get(n2).isDivine())
-			oppField.get(n2).setDivine(false);
-		else
-			oppField.get(n2).setCurrentHP(oppField.get(n2).getCurrentHP()-3);
+			damage2Minions(n2, n1, oppField);
+			
 	}
-
+	
+	public void damage2Minions(int i, int j, ArrayList<Minion> oppField) {
+		if(oppField.get(i).isDivine())
+			oppField.get(i).setDivine(false);
+		else
+			oppField.get(i).setCurrentHP(oppField.get(i).getCurrentHP()-3);
+		if(oppField.get(j).isDivine())
+			oppField.get(j).setDivine(false);
+		else
+			oppField.get(j).setCurrentHP(oppField.get(j).getCurrentHP()-3);
+	}
 
 }
