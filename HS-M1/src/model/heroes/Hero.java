@@ -122,12 +122,14 @@ public abstract class Hero implements MinionListener{
 	public void castSpell(AOESpell s, ArrayList<Minion> oppField) throws NotYourTurnException, NotEnoughManaException {
 		validator.validateTurn(this);
 		validator.validateManaCost((Card) s);
-		// If no exceptions:
-		s.performAction(oppField, field);
 		// Decrease mana
 		currentManaCrystals -= ((Card) s).getManaCost();
 		// Remove card
 		hand.remove((Card) s);
+		// If no exceptions:
+		s.performAction(oppField, field);
+		
+		
 	}
 
 	public void castSpell(MinionTargetSpell s, Minion m)
@@ -146,11 +148,12 @@ public abstract class Hero implements MinionListener{
 		validator.validateTurn(this);
 		validator.validateManaCost((Card) s);
 		// If no exceptions:
-		s.performAction(h);
 		// Decrease mana
-		currentManaCrystals -= ((Card) s).getManaCost();
-		// Remove card
-		hand.remove((Card) s);
+				currentManaCrystals -= ((Card) s).getManaCost();
+				// Remove card
+				hand.remove((Card) s);
+		s.performAction(h);
+		
 	}
 	
 	public void castSpell(LeechingSpell s, Minion m) throws NotYourTurnException,NotEnoughManaException
@@ -163,8 +166,8 @@ public abstract class Hero implements MinionListener{
 		//remove from hand
 		hand.remove((Card) s);
 		//activate the spell
-		s.performAction(m);
-		
+		int heal = s.performAction(m);
+		currentHP += heal;
 		
 	}	
 	public Card drawCard() throws FullHandException, CloneNotSupportedException 
