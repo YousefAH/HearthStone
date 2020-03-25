@@ -69,6 +69,8 @@ public class Game implements ActionValidator, HeroListener  {
 			throw new NotSummonedException("The minion you are targeting has not been summoned yet");
 		if(attacker.isSleeping())
 			throw new CannotAttackException("You cannot attack with a sleeping minion!!");
+		if(attacker.isAttacked())
+			throw new CannotAttackException("This minion attacked this turn");
 		if(attacker.getAttack()==0)
 			throw new CannotAttackException("You cannot attack with zero attack points!!");
 		if(!target.isTaunt()) {
@@ -88,6 +90,8 @@ public class Game implements ActionValidator, HeroListener  {
 			throw new InvalidTargetException("You cannot attack your hero!!");
 		if(attacker.isSleeping())
 			throw new CannotAttackException("You cannot attack with a sleeping minion!!");
+		if(attacker.isAttacked())
+			throw new CannotAttackException("This minion attacked this turn");
 		if(attacker.getAttack()==0)
 			throw new CannotAttackException("You cannot attack with zero attack points!!");
 		for(int i=0; i<a.size();i++) {
