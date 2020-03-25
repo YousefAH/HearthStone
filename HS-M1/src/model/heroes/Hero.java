@@ -10,7 +10,8 @@ import exceptions.*;
 import model.cards.*;
 import model.cards.minions.*;
 import model.cards.spells.*;
-public abstract class Hero implements MinionListener{
+
+public abstract class Hero implements MinionListener {
 
 	private String name;
 	private int currentHP;
@@ -108,7 +109,7 @@ public abstract class Hero implements MinionListener{
 		currentManaCrystals -= 2;
 		heroPowerUsed = true;
 	}
-	
+
 	public void castSpell(FieldSpell s) throws NotYourTurnException, NotEnoughManaException {
 		validator.validateTurn(this);
 		validator.validateManaCost((Card) s);
@@ -131,8 +132,8 @@ public abstract class Hero implements MinionListener{
 		s.performAction(oppField, field);
 	}
 
-	public void castSpell(MinionTargetSpell s, Minion m) throws NotYourTurnException, NotEnoughManaException, InvalidTargetException 
-	{
+	public void castSpell(MinionTargetSpell s, Minion m)
+			throws NotYourTurnException, NotEnoughManaException, InvalidTargetException {
 		validator.validateTurn(this);
 		validator.validateManaCost((Card) s);
 		// Remove card
@@ -149,104 +150,100 @@ public abstract class Hero implements MinionListener{
 		validator.validateManaCost((Card) s);
 		// If no exceptions:
 		// Decrease mana
-				currentManaCrystals -= ((Card) s).getManaCost();
-				// Remove card
-				hand.remove((Card) s);
+		currentManaCrystals -= ((Card) s).getManaCost();
+		// Remove card
+		hand.remove((Card) s);
 		s.performAction(h);
-		
+
 	}
-	
-	public void castSpell(LeechingSpell s, Minion m) throws NotYourTurnException,NotEnoughManaException
-	{
-		//check if card is playable
+
+	public void castSpell(LeechingSpell s, Minion m) throws NotYourTurnException, NotEnoughManaException {
+		// check if card is playable
 		validator.validateTurn(this);
 		validator.validateManaCost((Card) s);
-		//remove from hand
-				hand.remove((Card) s);
-		//lose mana
-		currentManaCrystals -= ((Card)s).getManaCost();
-		
-		//activate the spell
+		// remove from hand
+		hand.remove((Card) s);
+		// lose mana
+		currentManaCrystals -= ((Card) s).getManaCost();
+
+		// activate the spell
 		int heal = s.performAction(m);
 		currentHP += heal;
-		
-	}	
-	public Card drawCard() throws FullHandException, CloneNotSupportedException 
-	{
+
+	}
+
+	public Card drawCard() throws FullHandException, CloneNotSupportedException {
 		Minion chro = new Minion("Chromaggus", 8, Rarity.LEGENDARY, 6, 8, false, false, false);
-		//Minion wil = new Minion("Wilfred Fizzlebang", 6, Rarity.LEGENDARY, 4, 4, false,false,false);
-		if(deck.isEmpty()) 
-		{
+		// Minion wil = new Minion("Wilfred Fizzlebang", 6, Rarity.LEGENDARY, 4, 4,
+		// false,false,false);
+		if (deck.isEmpty()) {
 			currentHP -= fatigueDamage;
 			fatigueDamage++;
 			return new Minion("empty", 1, Rarity.BASIC, 1, 1, false, false, false);
 		}
-		
-		Card m = (Card)deck.get(0).clone();
-		if(hand.size()>=10)
+
+		Card m = (Card) deck.get(0).clone();
+		if (hand.size() >= 10)
 			throw new FullHandException(m);
 
 		hand.add(m);
 		deck.remove(0);
-			
+
 		fatigueCheck();
-		
-		//chromaggus ability
-		if(field.contains(chro))
-		{
-			if(hand.size()<10)
-				hand.add((Card)m.clone());
+
+		// chromaggus ability
+		if (field.contains(chro)) {
+			if (hand.size() < 10)
+				hand.add((Card) m.clone());
 		}
-		
+
 		return m;
 	}
-	
-	public void fatigueCheck()
-	{
-		if(deck.isEmpty() && fatigueDamage == 0)
+
+	public void fatigueCheck() {
+		if (deck.isEmpty() && fatigueDamage == 0)
 			fatigueDamage = 1;
 	}
-	
-	public boolean warlockCheck() 
-	{
-		if(deck.isEmpty()) 
-		{
+
+	public boolean warlockCheck() {
+		if (deck.isEmpty()) {
 			currentHP -= fatigueDamage;
 			fatigueDamage++;
 			return true;
 		}
 		return false;
 	}
-	
-	public void endTurn() throws FullHandException, CloneNotSupportedException
-	{
+
+	public void endTurn() throws FullHandException, CloneNotSupportedException {
 		listener.endTurn();
 	}
-	 public void playMinion(Minion m) throws NotYourTurnException, NotEnoughManaException, FullFieldException
-	 {
-		validator.validateManaCost((Card)m);
+
+	public void playMinion(Minion m) throws NotYourTurnException, NotEnoughManaException, FullFieldException {
+		validator.validateManaCost((Card) m);
 		validator.validatePlayingMinion(m);
 		validator.validateTurn(this);
-		hand.remove(m); 
+		hand.remove(m);
 		field.add(m);
-	 }
-	 public void attackWithMinion(Minion attacker, Minion target) throws CannotAttackException, 
-	 NotYourTurnException, TauntBypassException, InvalidTargetException, NotSummonedException{
-		 validator.validateTurn(this);
-		 validator.validateAttack(attacker, target);
-		 attacker.attack(target);
-	 }
-	 public void attackWithMinion(Minion attacker, Hero target) throws CannotAttackException, 
-	 NotYourTurnException, TauntBypassException, InvalidTargetException, NotSummonedException{
-		 validator.validateTurn(this);
-		 validator.validateAttack(attacker, target);
-		 attacker.attack(target);
-	 }
-	 
-	 public void onMinionDeath(Minion m) 
-	 {
-		 getField().remove(m); 
-	 }
+	}
+
+	public void attackWithMinion(Minion attacker, Minion target) throws CannotAttackException, NotYourTurnException,
+			TauntBypassException, InvalidTargetException, NotSummonedException {
+		validator.validateTurn(this);
+		validator.validateAttack(attacker, target);
+		attacker.attack(target);
+	}
+
+	public void attackWithMinion(Minion attacker, Hero target) throws CannotAttackException, NotYourTurnException,
+			TauntBypassException, InvalidTargetException, NotSummonedException {
+		validator.validateTurn(this);
+		validator.validateAttack(attacker, target);
+		attacker.attack(target);
+	}
+
+	public void onMinionDeath(Minion m) {
+		getField().remove(m);
+	}
+
 	public int getCurrentHP() {
 		return currentHP;
 	}
@@ -304,7 +301,6 @@ public abstract class Hero implements MinionListener{
 	public String getName() {
 		return name;
 	}
-
 
 	public void setListener(HeroListener listener) {
 		this.listener = listener;
