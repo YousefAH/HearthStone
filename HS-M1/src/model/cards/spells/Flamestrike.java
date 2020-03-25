@@ -24,7 +24,11 @@ public class Flamestrike extends Spell implements AOESpell {
 
 		while (iter.hasNext()) {
 		    Minion m = iter.next();
-		    if(m.getCurrentHP()<=4)
+		    if(m.isDivine())
+		    {
+		    	m.setDivine(false);
+		    }
+		    else if(m.getCurrentHP()<=4)
 		    	iter.remove();
 		    else
 		    	m.setCurrentHP(m.getCurrentHP()-4);
