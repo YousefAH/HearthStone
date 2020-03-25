@@ -15,7 +15,7 @@ public class CurseOfWeakness extends Spell implements AOESpell {
 	public void performAction(ArrayList<Minion> oppField, ArrayList<Minion> curField)
 	{
 		for (Minion m : oppField) {
-			m.setCurrentHP(m.getCurrentHP() - 2);
+			m.setAttack(m.getAttack() - 2);
 		}
 	}
 }
