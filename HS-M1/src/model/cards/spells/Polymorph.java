@@ -13,8 +13,14 @@ public class Polymorph extends Spell implements MinionTargetSpell {
 	@Override
 	public void performAction(Minion m) throws InvalidTargetException 
 	{
-		m = new Minion("Sheep", 1, Rarity.BASIC, 1, 1, false, false, false);
-		
+		m.setName("Sheep");
+		m.setAttack(1);
+		m.setCurrentHP(1);
+		m.setMaxHP(1);
+		m.setManaCost(1);
+		m.setDivine(false);
+		m.setTaunt(false);
+		m.setSleeping(true);
 	}
 
 }
