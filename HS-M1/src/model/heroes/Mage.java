@@ -24,6 +24,7 @@ public class Mage extends Hero {
 			getDeck().add(new Polymorph());
 			getDeck().add(new Flamestrike());
 			getDeck().add(new Pyroblast());
+			
 		}
 		Minion kalycgos = (new Minion("Kalycgos", 10, Rarity.LEGENDARY, 4, 12, false, false, false));
 		;

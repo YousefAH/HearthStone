@@ -35,6 +35,7 @@ public class Priest extends Hero {
 		}
 		Minion velen=new Minion("Prophet Velen", 7, Rarity.LEGENDARY, 7, 7, false, false, false);
 		
+		
 		getDeck().add(velen);
 		
 		for (int i = 0; i < getDeck().size(); i++) 

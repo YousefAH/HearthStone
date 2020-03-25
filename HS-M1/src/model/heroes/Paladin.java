@@ -41,6 +41,7 @@ public class Paladin extends Hero {
 				((Minion) c).setListener(this);
 		}
 		
+		
 		Collections.shuffle(getDeck());
 	}
 	

@@ -66,6 +66,7 @@ public class Warlock extends Hero {
 			if(getHand().size()<9)
 				getHand().add((Card)c.clone());
 		
+		
 		return c;
 		
 	}
