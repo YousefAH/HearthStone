@@ -64,7 +64,7 @@ public class Game implements ActionValidator, HeroListener  {
 			throws CannotAttackException, NotSummonedException, TauntBypassException, InvalidTargetException {
 		ArrayList<Minion> a =opponent.getField();
 		if(currentHero.getField().contains(target))
-			throw new InvalidTargetException("You cannot attack friendly minons!!");
+			throw new InvalidTargetException("You cannot attack friendly minions!!");
 		if(!opponent.getField().contains(target))
 			throw new NotSummonedException("The minion you are targeting have not been summoned yet");
 		if(attacker.isSleeping())
