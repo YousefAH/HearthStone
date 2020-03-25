@@ -48,17 +48,25 @@ public class Priest extends Hero {
 
 	}
 	
-	public void useHeroPower(Object target) throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException, FullFieldException, CloneNotSupportedException
+	public void useHeroPower(Minion target) throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException, FullFieldException, CloneNotSupportedException
 	 {
 		super.useHeroPower();
 		Minion v = new Minion("Prophet Velen", 7, Rarity.LEGENDARY, 7, 7, false,false,false);
 		int p = 2;
 		if(getField().contains(v))
 			p = 8;
-		if(target instanceof Minion)
-			((Minion)target).setCurrentHP(((Minion)target).getCurrentHP()+p);
-		else if(target instanceof Hero)
-			((Hero)target).setCurrentHP(((Hero)target).getCurrentHP()+p);
+		target.setCurrentHP(target.getCurrentHP()+p);
+		
+	 }
+	
+	public void useHeroPower(Hero target) throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException, FullFieldException, CloneNotSupportedException
+	 {
+		super.useHeroPower();
+		Minion v = new Minion("Prophet Velen", 7, Rarity.LEGENDARY, 7, 7, false,false,false);
+		int p = 2;
+		if(getField().contains(v))
+			p = 8;
+		target.setCurrentHP(target.getCurrentHP()+p);
 	 }
 	
 	
