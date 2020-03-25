@@ -1,13 +1,11 @@
 package model.cards.spells;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 import model.cards.Rarity;
 import model.cards.minions.Minion;
-import model.heroes.Hero;
-import model.heroes.Hunter;
+
 
 public class Flamestrike extends Spell implements AOESpell {
 

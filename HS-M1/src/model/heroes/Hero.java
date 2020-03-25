@@ -135,12 +135,13 @@ public abstract class Hero implements MinionListener{
 	{
 		validator.validateTurn(this);
 		validator.validateManaCost((Card) s);
+		// Remove card
+		hand.remove((Card) s);
 		// If no exceptions:
 		s.performAction(m);
 		// Decrease mana
 		currentManaCrystals -= ((Card) s).getManaCost();
-		// Remove card
-		hand.remove((Card) s);
+
 	}
 
 	public void castSpell(HeroTargetSpell s, Hero h) throws NotYourTurnException, NotEnoughManaException {
@@ -160,10 +161,11 @@ public abstract class Hero implements MinionListener{
 		//check if card is playable
 		validator.validateTurn(this);
 		validator.validateManaCost((Card) s);
+		//remove from hand
+				hand.remove((Card) s);
 		//lose mana
 		currentManaCrystals -= ((Card)s).getManaCost();
-		//remove from hand
-		hand.remove((Card) s);
+		
 		//activate the spell
 		int heal = s.performAction(m);
 		currentHP += heal;

@@ -20,7 +20,10 @@ public class MultiShot extends Spell implements AOESpell {
 
 		if(oppField.size()==1) 
 		{
-			oppField.get(0).setCurrentHP(oppField.get(0).getCurrentHP()-3);
+			if(oppField.get(0).isDivine())
+				oppField.get(0).setDivine(false);
+			else
+				oppField.get(0).setCurrentHP(oppField.get(0).getCurrentHP()-3);
 			return;
 		}
 		
