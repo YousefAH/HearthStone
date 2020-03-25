@@ -30,6 +30,7 @@ public class MultiShot extends Spell implements AOESpell {
 			n2 = (int)(Math.random() *oppField.size());
 		}while(n1==n2);
 		
+		
 		if(oppField.get(n1).isDivine())
 			oppField.get(n1).setDivine(false);
 		else

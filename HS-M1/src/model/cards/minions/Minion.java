@@ -26,21 +26,22 @@ public class Minion extends Card implements Cloneable {
 			this.sleeping = true;
 	}
 
-	public void attack(Minion target) {
-		if (attacked == false) {
-			if (target.divine) {
-				if (!divine) {
-					this.setCurrentHP(currentHP - target.attack);
-				}
-			} else {
-				if(!divine)
-					this.setCurrentHP(currentHP - target.attack);
-				target.setCurrentHP(target.currentHP - this.attack);
-			}
-			target.divine = false;
-			
-			attacked = true;
-		}
+	public void attack(Minion target) 
+	{
+		if(attacked)
+			return;
+		if(target.isDivine())
+			if(attack != 0)
+				target.divine = false;
+		target.currentHP -= attack;
+		
+		if(isDivine())
+			if(target.attack != 0)
+				divine = false;
+		currentHP -= target.attack;
+		
+		attacked = true;
+		
 	}
 
 	public void attack(Hero target) throws InvalidTargetException {
