@@ -15,10 +15,12 @@ public class Flamestrike extends Spell implements AOESpell {
 	}
 
 	@Override
-	public void performAction(ArrayList<Minion> oppField, ArrayList<Minion> curField) {
+	public void performAction(ArrayList<Minion> oppField, ArrayList<Minion> curField) 
+	{
 		for (int i = 0; i < oppField.size(); i++) 
 		{
-			oppField.get(i).setCurrentHP(oppField.get(i).getCurrentHP()-4);
+			Minion m = oppField.get(i);
+			m.setCurrentHP(m.getCurrentHP()-4);
 		}
 		
 	}

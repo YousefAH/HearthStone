@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.IOException;
+import java.io.ObjectInputStream.GetField;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -2472,7 +2473,6 @@ public class M2PublicTests {
 		paladin.setValidator(validator);
 		paladin.setCurrentManaCrystals(2);
 		paladin.useHeroPower();
-
 		if(paladin.getField().size()!=1)
 			fail("useHeroPower in class Paladin should add Silver Hand Recruit to the field.");
 		Minion silverHandRecruit = paladin.getField().get(0);

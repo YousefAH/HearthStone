@@ -160,17 +160,17 @@ public abstract class Hero implements MinionListener{
 		validator.validateManaCost((Card) s);
 		//lose mana
 		currentManaCrystals -= ((Card)s).getManaCost();
-		//activate the spell
-		s.performAction(m);
 		//remove from hand
 		hand.remove((Card) s);
+		//activate the spell
+		s.performAction(m);
 		
-	}
-	
+		
+	}	
 	public Card drawCard() throws FullHandException, CloneNotSupportedException 
 	{
 		Minion chro = new Minion("Chromaggus", 8, Rarity.LEGENDARY, 6, 8, false, false, false);
-		
+		//Minion wil = new Minion("Wilfred Fizzlebang", 6, Rarity.LEGENDARY, 4, 4, false,false,false);
 		if(deck.isEmpty()) 
 		{
 			currentHP -= fatigueDamage;
@@ -181,11 +181,11 @@ public abstract class Hero implements MinionListener{
 		Card m = (Card)deck.get(0).clone();
 		if(hand.size()>10)
 			throw new FullHandException(m);
+
 		hand.add(m);
 		deck.remove(0);
 			
-		if(deck.isEmpty() && fatigueDamage == 0)
-			fatigueDamage = 1;
+		fatigueCheck();
 		
 		//chromaggus ability
 		if(field.contains(chro))
@@ -197,6 +197,23 @@ public abstract class Hero implements MinionListener{
 		return m;
 	}
 	
+	public void fatigueCheck()
+	{
+		if(deck.isEmpty() && fatigueDamage == 0)
+			fatigueDamage = 1;
+	}
+	
+	public boolean warlockCheck() 
+	{
+		if(deck.isEmpty()) 
+		{
+			currentHP -= fatigueDamage;
+			fatigueDamage++;
+			return true;
+		}
+		return false;
+	}
+	
 	public void endTurn() throws FullHandException, CloneNotSupportedException
 	{
 		listener.endTurn();
@@ -206,8 +223,7 @@ public abstract class Hero implements MinionListener{
 		validator.validateManaCost((Card)m);
 		validator.validatePlayingMinion(m);
 		validator.validateTurn(this);
-		hand.remove(m);
-		m.setListener(this);
+		hand.remove(m); 
 		field.add(m);
 	 }
 	 public void attackWithMinion(Minion attacker, Minion target) throws CannotAttackException, 

@@ -44,7 +44,8 @@ public class Game implements ActionValidator, HeroListener  {
 		}
 		opponent.drawCard();
 		
-		
+		currentHero.setListener(this);
+		opponent.setListener(this);
 	}
 
 	public Hero getCurrentHero() {

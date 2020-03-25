@@ -43,10 +43,26 @@ public class Paladin extends Hero {
 		
 		Collections.shuffle(getDeck());
 	}
-	public void useHeroPower(Hero opp) throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException, FullFieldException, CloneNotSupportedException
+	
+	public Card drawCard() throws FullHandException, CloneNotSupportedException 
+	{
+		Card m = super.drawCard();
+		getHand().add(m);
+		Minion chro = new Minion("Chromaggus", 8, Rarity.LEGENDARY, 6, 8, false, false, false);
+		//chromaggus ability
+		if(getField().contains(chro))
+			if(getHand().size()<10)
+				getHand().add((Card)m.clone());
+		
+		return m;
+	}
+	
+	public void useHeroPower() throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException, FullFieldException, CloneNotSupportedException
 	 {
 		 super.useHeroPower();
-		 playMinion(new Minion("Silver Hand Recruit", 1, Rarity.BASIC, 1, 1, false, false, false));
+		 if(getField().size()>=7)
+			 throw new FullFieldException();
+		 getField().add(new Minion("Silver Hand Recruit", 1, Rarity.BASIC, 1, 1, false, false, false));
 	 }
 	
 }

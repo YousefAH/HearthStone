@@ -47,32 +47,32 @@ public class Warlock extends Hero {
 
 	}
 
-	public void checkFizzlebangOnField(Minion minion) {
-		for (Minion m : getField())
-			if (m.getName().equals("Wilfred Fizzlebang")) {
-				minion.setManaCost(0);
-				return;
-			}
-	}
-
-	@Override
-	public Card drawCard() throws FullHandException, CloneNotSupportedException {
-		// FizzleBang
-		Card c = super.drawCard();
-		if (c == null) // Empty deck
-			return null;
-		if (c instanceof Minion)
-			checkFizzlebangOnField((Minion) c);
-
-		// Chromaggus to be added
-
+	
+	public Card drawCard_withPower() throws FullHandException, CloneNotSupportedException
+	{
+		if(warlockCheck())
+			return new Minion("empty", 1, Rarity.BASIC, 1, 1, false, false, false);
+		
+		Card c = getDeck().get(0);
+		Minion wil = new Minion("Wilfred Fizzlebang", 6, Rarity.LEGENDARY, 4, 4, false, false, false);
+		if(getField().contains(wil))
+			c.setManaCost(0);
+		getHand().add(c);
+		getDeck().remove(0);
+		fatigueCheck();
+		Minion chro = new Minion("Chromaggus", 8, Rarity.LEGENDARY, 6, 8, false, false, false);
+		//chromaggus ability
+		if(getField().contains(chro))
+			if(getHand().size()<9)
+				getHand().add((Card)c.clone());
+		
 		return c;
+		
 	}
-
-	public void useHeroPower() throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException,
-			FullHandException, FullFieldException, CloneNotSupportedException {
+	
+	public void useHeroPower() throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException,FullHandException, FullFieldException, CloneNotSupportedException {
 		super.useHeroPower();
-		Card c = drawCard();
+		Card c = drawCard_withPower();
 		setCurrentHP(getCurrentHP() - 2);
 	}
 

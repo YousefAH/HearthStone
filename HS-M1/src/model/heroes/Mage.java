@@ -40,6 +40,7 @@ public class Mage extends Hero {
 
 	}
 
+	
 	public void checkKalycgosOnField(Spell s) { // Legendary Minion Special effects
 		for (Minion m : getField())
 			if (m.getName().equals("Kalycgos")) {

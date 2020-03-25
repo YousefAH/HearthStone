@@ -60,5 +60,7 @@ public class Priest extends Hero {
 		else if(target instanceof Hero)
 			((Hero)target).setCurrentHP(((Hero)target).getCurrentHP()+p);
 	 }
+	
+	
 
 }
