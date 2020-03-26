@@ -58,7 +58,7 @@ public class Warlock extends Hero {
 //		if(getField().contains(wil))
 //			c.setManaCost(0);
 		for(Card card : getField())
-			if(card.getName().equals("Wilfred Fizzlebang"))
+			if(c instanceof Minion && card.getName().equals("Wilfred Fizzlebang"))
 				c.setManaCost(0);
 		getHand().add(c);
 		getDeck().remove(0);
