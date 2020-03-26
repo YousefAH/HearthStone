@@ -22,9 +22,11 @@ public class Paladin extends Hero {
 	}
 	
 	@Override
-	public void buildDeck() throws IOException {
+	public void buildDeck() throws IOException, CloneNotSupportedException {
 		ArrayList<Minion> neutrals= getNeutralMinions(getAllNeutralMinions("neutral_minions.csv"),15);
-		getDeck().addAll(neutrals);
+//		getDeck().addAll(neutrals);
+		for(Card c : neutrals)
+			getDeck().add((Card) c.clone());
 		for(int i = 0 ; i < 2; i++)
 		{
 			getDeck().add(new SealOfChampions());
@@ -49,12 +51,14 @@ public class Paladin extends Hero {
 	{
 		Card m = super.drawCard();
 		getHand().add(m);
-		Minion chro = new Minion("Chromaggus", 8, Rarity.LEGENDARY, 6, 8, false, false, false);
+//		Minion chro = new Minion("Chromaggus", 8, Rarity.LEGENDARY, 6, 8, false, false, false);
 		//chromaggus ability
-		if(getField().contains(chro))
-			if(getHand().size()<10)
-				getHand().add((Card)m.clone());
-		
+//		if(getField().contains(chro))
+//			if(getHand().size()<10)
+//				getHand().add((Card)m.clone());
+		for(Card c : getField())
+			if(c.getName().equals("Chromaggus") && getHand().size()<10)
+				getHand().add((Card) m.clone());
 		return m;
 	}
 	

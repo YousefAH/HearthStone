@@ -54,18 +54,24 @@ public class Warlock extends Hero {
 			return new Minion("empty", 1, Rarity.BASIC, 1, 1, false, false, false);
 		
 		Card c = getDeck().get(0);
-		Minion wil = new Minion("Wilfred Fizzlebang", 6, Rarity.LEGENDARY, 4, 4, false, false, false);
-		if(getField().contains(wil))
-			c.setManaCost(0);
+//		Minion wil = new Minion("Wilfred Fizzlebang", 6, Rarity.LEGENDARY, 4, 4, false, false, false);
+//		if(getField().contains(wil))
+//			c.setManaCost(0);
+		for(Card card : getField())
+			if(card.getName().equals("Wilfred Fizzlebang"))
+				c.setManaCost(0);
 		getHand().add(c);
 		getDeck().remove(0);
 		fatigueCheck();
-		Minion chro = new Minion("Chromaggus", 8, Rarity.LEGENDARY, 6, 8, false, false, false);
+//		Minion chro = new Minion("Chromaggus", 8, Rarity.LEGENDARY, 6, 8, false, false, false);
 		//chromaggus ability
-		if(getField().contains(chro))
-			if(getHand().size()<9)
-				getHand().add((Card)c.clone());
-		
+//		if(getField().contains(chro))
+//			if(getHand().size()<9)
+//				getHand().add((Card)c.clone());
+		for(Card card : getField())
+			if(card.getName().equals("Chromaggus"))
+				if(getHand().size()<9)
+					getHand().add((Card)c.clone());
 		
 		return c;
 		
