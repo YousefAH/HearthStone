@@ -25,8 +25,8 @@ public class Paladin extends Hero {
 	public void buildDeck() throws IOException, CloneNotSupportedException {
 		ArrayList<Minion> neutrals= getNeutralMinions(getAllNeutralMinions("neutral_minions.csv"),15);
 //		getDeck().addAll(neutrals);
-		for(Card c : neutrals)
-			getDeck().add((Card) c.clone());
+		for(Minion minion : neutrals)
+			getDeck().add((Minion) minion.clone());
 		for(int i = 0 ; i < 2; i++)
 		{
 			getDeck().add(new SealOfChampions());

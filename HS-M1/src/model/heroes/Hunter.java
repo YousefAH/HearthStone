@@ -17,39 +17,33 @@ public class Hunter extends Hero {
 	}
 
 	@Override
-	public void buildDeck() throws IOException {
-		ArrayList<Minion> neutrals= getNeutralMinions(getAllNeutralMinions("neutral_minions.csv"),15);
-		getDeck().addAll(neutrals);
-		for(int i = 0 ; i < 2; i++)
-		{
+	public void buildDeck() throws IOException, CloneNotSupportedException {
+		ArrayList<Minion> neutrals = getNeutralMinions(getAllNeutralMinions("neutral_minions.csv"), 15);
+//		getDeck().addAll(neutrals);
+		for (Card card : neutrals)
+			getDeck().add((Card) card.clone());
+		for (int i = 0; i < 2; i++) {
 			getDeck().add(new KillCommand());
 			getDeck().add(new MultiShot());
-			
-			
+
 		}
-		Minion krush=(new Minion("King Krush", 9, Rarity.LEGENDARY, 8, 8, false, false, true));
-		
+		Minion krush = (new Minion("King Krush", 9, Rarity.LEGENDARY, 8, 8, false, false, true));
+
 		getDeck().add(krush);
-		
-		for (int i = 0; i < getDeck().size(); i++) 
-		{
+
+		for (int i = 0; i < getDeck().size(); i++) {
 			Card c = getDeck().get(i);
-			if(c instanceof Minion)
+			if (c instanceof Minion)
 				((Minion) c).setListener(this);
 		}
-		
+
 		Collections.shuffle(getDeck());
 	}
-	
-	
-	 public void useHeroPower(Hero opp) throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException, FullFieldException, CloneNotSupportedException
-	 {
-		 super.useHeroPower();
-		 opp.setCurrentHP(opp.getCurrentHP()-2);
-	 }
 
-	
-	
-	
-	
+	public void useHeroPower(Hero opp) throws NotEnoughManaException, HeroPowerAlreadyUsedException,
+			NotYourTurnException, FullHandException, FullFieldException, CloneNotSupportedException {
+		super.useHeroPower();
+		opp.setCurrentHP(opp.getCurrentHP() - 2);
+	}
+
 }

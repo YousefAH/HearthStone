@@ -24,9 +24,11 @@ public class Priest extends Hero {
 	}
 
 	@Override
-	public void buildDeck() throws IOException {
+	public void buildDeck() throws IOException, CloneNotSupportedException {
 		ArrayList<Minion> neutrals = getNeutralMinions(getAllNeutralMinions("neutral_minions.csv"), 13);
-		getDeck().addAll(neutrals);
+//		getDeck().addAll(neutrals);
+		for (Minion minion : neutrals)
+			getDeck().add((Minion) minion.clone());
 		for (int i = 0; i < 2; i++) {
 			getDeck().add(new DivineSpirit());
 			getDeck().add(new HolyNova());
