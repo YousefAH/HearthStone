@@ -26,8 +26,8 @@ public class Warlock extends Hero {
 	public void buildDeck() throws IOException, CloneNotSupportedException {
 		ArrayList<Minion> neutrals = getNeutralMinions(getAllNeutralMinions("neutral_minions.csv"), 13);
 //		getDeck().addAll(neutrals);
-		for(Minion minion:neutrals)
-			getDeck().add((Minion) minion.clone());
+		for (int i = 0; i < neutrals.size(); i++) 
+			getDeck().add((Minion) neutrals.get(i).clone());
 
 		for (int i = 0; i < 2; i++) {
 			getDeck().add(new CurseOfWeakness());

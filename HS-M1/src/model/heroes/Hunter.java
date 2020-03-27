@@ -20,8 +20,9 @@ public class Hunter extends Hero {
 	public void buildDeck() throws IOException, CloneNotSupportedException {
 		ArrayList<Minion> neutrals = getNeutralMinions(getAllNeutralMinions("neutral_minions.csv"), 15);
 //		getDeck().addAll(neutrals);
-		for (Card card : neutrals)
-			getDeck().add((Card) card.clone());
+		for (int i = 0; i < neutrals.size(); i++) 
+			getDeck().add((Minion) neutrals.get(i).clone());
+		
 		for (int i = 0; i < 2; i++) {
 			getDeck().add(new KillCommand());
 			getDeck().add(new MultiShot());
