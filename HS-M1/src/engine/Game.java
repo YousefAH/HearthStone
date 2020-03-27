@@ -12,6 +12,7 @@ import exceptions.NotSummonedException;
 import exceptions.NotYourTurnException;
 import exceptions.TauntBypassException;
 import model.cards.Card;
+import model.cards.minions.Icehowl;
 import model.cards.minions.Minion;
 import model.heroes.Hero;
 import model.heroes.HeroListener;
@@ -88,6 +89,8 @@ public class Game implements ActionValidator, HeroListener  {
 		ArrayList<Minion> a =opponent.getField();
 		if(currentHero==target)
 			throw new InvalidTargetException("You cannot attack your hero!!");
+		if(attacker instanceof Icehowl)
+			throw new InvalidTargetException("Icehowl can not attack heroes");
 		if(attacker.isSleeping())
 			throw new CannotAttackException("You cannot attack with a sleeping minion!!");
 		if(attacker.isAttacked())
@@ -95,9 +98,9 @@ public class Game implements ActionValidator, HeroListener  {
 		if(attacker.getAttack()==0)
 			throw new CannotAttackException("You cannot attack with zero attack points!!");
 		for(int i=0; i<a.size();i++) {
-			if(a.get(i).isTaunt()==true) {
+			if(a.get(i).isTaunt()==true) 
 				throw new TauntBypassException("A minion with Taunt is in the way");
-			}
+			
 		}
 		if(!currentHero.getField().contains(attacker))
 			throw new NotSummonedException("The minion is not summoned!!");
