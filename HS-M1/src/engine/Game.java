@@ -98,9 +98,9 @@ public class Game implements ActionValidator, HeroListener  {
 		if(attacker.getAttack()==0)
 			throw new CannotAttackException("You cannot attack with zero attack points!!");
 		for(int i=0; i<a.size();i++) {
-			if(a.get(i).isTaunt()==true) {
+			if(a.get(i).isTaunt()==true) 
 				throw new TauntBypassException("A minion with Taunt is in the way");
-			}
+			
 		}
 		if(!currentHero.getField().contains(attacker))
 			throw new NotSummonedException("The minion is not summoned!!");
