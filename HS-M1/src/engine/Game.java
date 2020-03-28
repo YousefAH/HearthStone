@@ -47,6 +47,8 @@ public class Game implements ActionValidator, HeroListener  {
 		
 		currentHero.setListener(this);
 		opponent.setListener(this);
+		currentHero.setValidator(this);
+		opponent.setValidator(this);
 	}
 
 	public Hero getCurrentHero() {
