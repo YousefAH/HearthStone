@@ -18,38 +18,36 @@ public class MultiShot extends Spell implements AOESpell {
 		if (oppField.isEmpty())
 			return;
 
-		if(oppField.size()==1) 
-		{
-			if(oppField.get(0).isDivine())
+		if (oppField.size() == 1) {
+			if (oppField.get(0).isDivine())
 				oppField.get(0).setDivine(false);
 			else
-				oppField.get(0).setCurrentHP(oppField.get(0).getCurrentHP()-3);
+				oppField.get(0).setCurrentHP(oppField.get(0).getCurrentHP() - 3);
 			return;
 		}
-		
-		int n1 = (int)(Math.random() *oppField.size()), n2;
-		do 
-		{
-			n2 = (int)(Math.random() *oppField.size());
-		}while(n1==n2);
-		
-		
-		if(n1>n2)
+
+		int n1 = (int) (Math.random() * oppField.size()), n2;
+		do {
+			n2 = (int) (Math.random() * oppField.size());
+		} while (n1 == n2);
+
+		if (n1 > n2)
 			damage2Minions(n1, n2, oppField);
 		else
 			damage2Minions(n2, n1, oppField);
-			
+
 	}
-	
+
 	public void damage2Minions(int i, int j, ArrayList<Minion> oppField) {
-		if(oppField.get(i).isDivine())
+		if (oppField.get(i).isDivine())
 			oppField.get(i).setDivine(false);
 		else
-			oppField.get(i).setCurrentHP(oppField.get(i).getCurrentHP()-3);
-		if(oppField.get(j).isDivine())
+			oppField.get(i).setCurrentHP(oppField.get(i).getCurrentHP() - 3);
+
+		if (oppField.get(j).isDivine())
 			oppField.get(j).setDivine(false);
 		else
-			oppField.get(j).setCurrentHP(oppField.get(j).getCurrentHP()-3);
+			oppField.get(j).setCurrentHP(oppField.get(j).getCurrentHP() - 3);
 	}
 
 }
