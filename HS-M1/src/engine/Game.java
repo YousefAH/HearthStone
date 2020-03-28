@@ -47,6 +47,8 @@ public class Game implements ActionValidator, HeroListener  {
 		
 		currentHero.setListener(this);
 		opponent.setListener(this);
+		currentHero.setValidator(this);
+		opponent.setValidator(this);
 	}
 
 	public Hero getCurrentHero() {
@@ -90,7 +92,8 @@ public class Game implements ActionValidator, HeroListener  {
 		if(currentHero==target)
 			throw new InvalidTargetException("You cannot attack your hero!!");
 		if(attacker instanceof Icehowl)
-			throw new InvalidTargetException("Icehowl can not attack heroes");
+			if(!attacker.getName().equals("Sheep"))
+				throw new InvalidTargetException("Icehowl can not attack heroes");
 		if(attacker.isSleeping())
 			throw new CannotAttackException("You cannot attack with a sleeping minion!!");
 		if(attacker.isAttacked())
