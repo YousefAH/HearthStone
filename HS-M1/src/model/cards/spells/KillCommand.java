@@ -7,19 +7,21 @@ import model.heroes.Hero;
 
 public class KillCommand extends Spell implements MinionTargetSpell, HeroTargetSpell {
 
-	public KillCommand()  {
+	public KillCommand() {
 		super("Kill Command", 3, Rarity.COMMON);
-		
+
 	}
 
 	@Override
 	public void performAction(Hero h) {
-		// TODO Auto-generated method stub
-		h.setCurrentHP(h.getCurrentHP()-3);
+		h.setCurrentHP(h.getCurrentHP() - 3);
 	}
 
 	@Override
 	public void performAction(Minion m) throws InvalidTargetException {
-		m.setCurrentHP(m.getCurrentHP()-5);
+		if (m.isDivine())
+			m.setDivine(false);
+		else
+			m.setCurrentHP(m.getCurrentHP() - 5);
 	}
 }
