@@ -60,7 +60,7 @@ public class Game implements ActionValidator, HeroListener  {
 	}
 	public void validateTurn(Hero user) throws NotYourTurnException {
 		if(currentHero!=user) {
-			throw new NotYourTurnException("this not your turn!!");
+			throw new NotYourTurnException("This is not your turn!!");
 		}
 	}
 	public void validateAttack(Minion attacker, Minion target)
