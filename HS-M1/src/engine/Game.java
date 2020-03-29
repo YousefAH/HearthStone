@@ -114,7 +114,7 @@ public class Game implements ActionValidator, HeroListener  {
 		}
 	}
 	public void validatePlayingMinion(Minion minion) throws FullFieldException {
-		if(currentHero.getField().size()==7) {
+		if(currentHero.getField().size()>=7) {
 			throw new FullFieldException("The field is full!!");
 		}
 		
