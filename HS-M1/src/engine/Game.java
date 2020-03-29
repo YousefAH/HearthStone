@@ -110,7 +110,7 @@ public class Game implements ActionValidator, HeroListener  {
 	}
 	public void validateManaCost(Card card) throws NotEnoughManaException {
 		if(card.getManaCost()>currentHero.getCurrentManaCrystals()) {
-			throw new NotEnoughManaException("You do not have enough manacrystals!!");
+			throw new NotEnoughManaException("You do not have enough mana crystals!!");
 		}
 	}
 	public void validatePlayingMinion(Minion minion) throws FullFieldException {
