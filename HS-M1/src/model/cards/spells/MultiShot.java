@@ -1,7 +1,6 @@
 package model.cards.spells;
 
 import java.util.ArrayList;
-import engine.Game;
 import model.cards.Rarity;
 import model.cards.minions.Minion;
 
