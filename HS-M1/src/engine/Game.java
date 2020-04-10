@@ -66,10 +66,10 @@ public class Game implements ActionValidator, HeroListener  {
 	public void validateAttack(Minion attacker, Minion target)
 			throws CannotAttackException, NotSummonedException, TauntBypassException, InvalidTargetException {
 		ArrayList<Minion> a =opponent.getField();
+		if(!currentHero.getField().contains(attacker))
+			throw new NotSummonedException("The attacking minion has not been summoned yet");
 		if(currentHero.getField().contains(target))
 			throw new InvalidTargetException("You cannot attack friendly minions!!");
-		if(!opponent.getField().contains(target))
-			throw new NotSummonedException("The minion you are targeting has not been summoned yet");
 		if(attacker.isSleeping())
 			throw new CannotAttackException("You cannot attack with a sleeping minion!!");
 		if(attacker.isAttacked())
@@ -89,6 +89,8 @@ public class Game implements ActionValidator, HeroListener  {
 	public void validateAttack(Minion attacker, Hero target)
 			throws CannotAttackException, NotSummonedException, TauntBypassException, InvalidTargetException {
 		ArrayList<Minion> a =opponent.getField();
+		if(!currentHero.getField().contains(attacker))
+			throw new NotSummonedException("The attacking minion has not been summoned yet");
 		if(currentHero==target)
 			throw new InvalidTargetException("You cannot attack your hero!!");
 		if(attacker instanceof Icehowl)
