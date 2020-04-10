@@ -53,8 +53,6 @@ public class Priest extends Hero {
 		super.useHeroPower();
 //		Minion v = new Minion("Prophet Velen", 7, Rarity.LEGENDARY, 7, 7, false,false,false);
 		int p = 2;
-//		if(getField().contains(v))
-//			p = 8;
 		for (Card card : getField())
 			if (card.getName().equals("Prophet Velen"))
 				p = 8;
