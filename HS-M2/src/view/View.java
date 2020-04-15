@@ -54,6 +54,7 @@ public class View extends JFrame{
 		currentHandPanel.setLayout(new GridLayout(0,7));
 
 		
+		
 		mainPanel.add(opponentHandPanel);
 		mainPanel.add(opponentFieldPanel);
 		mainPanel.add(currentFieldPanel);
