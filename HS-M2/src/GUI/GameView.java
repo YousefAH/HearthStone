@@ -113,5 +113,13 @@ public class GameView extends JFrame  {
 		new GameView();
 	}
 
+	public JTextArea getcText() {
+		return cText;
+	}
+
+	public JTextArea getoText() {
+		return oText;
+	}
+
 	
 }

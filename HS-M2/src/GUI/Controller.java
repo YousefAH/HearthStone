@@ -7,6 +7,7 @@ import java.io.IOException;
 import javax.swing.*;
 import java.util.*;
 import engine.*;
+import exceptions.FullHandException;
 import model.heroes.*;
 
 
@@ -26,7 +27,6 @@ class Selector extends JFrame implements ActionListener
 	private JRadioButton oHunter = new JRadioButton("Hunter");
 	private JRadioButton oWarlock = new JRadioButton("Warlock");
 	private JRadioButton oPriest = new JRadioButton("Paladin");
-	
 	public Selector()
 	{
 		this.setVisible(true);
@@ -70,7 +70,6 @@ class Selector extends JFrame implements ActionListener
 		b.addActionListener(this);
 		this.add(b);
 	}
-
 	public void actionPerformed(ActionEvent e) 
 	{
 		Hero p1 = null, p2 = null;
@@ -101,7 +100,7 @@ class Selector extends JFrame implements ActionListener
 					new Controller(p1, p2);
 					this.dispose();
 				}
-			} catch (IOException | CloneNotSupportedException e1) {
+			} catch (IOException | CloneNotSupportedException | FullHandException e1) {
 				e1.printStackTrace();
 			}
 		
@@ -118,10 +117,12 @@ public class Controller implements ActionListener, GameListener
 	private ArrayList<JButton> oHand;
 	
 	
-	public Controller(Hero p1, Hero p2) throws IOException 
+	public Controller(Hero p1, Hero p2) throws IOException, FullHandException, CloneNotSupportedException 
 	{
 		model = new GameView();
-		
+		g = new Game(p1, p2);
+		model.getcText().setText(p1.getName());
+		model.getoText().setText(p2.getName());
 	}
 
 	
