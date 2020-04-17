@@ -1,13 +1,11 @@
-package view;
+package GUI;
 
 import java.awt.*;
-import java.io.File;
 import java.io.IOException;
-import javax.imageio.ImageIO;
 import javax.swing.*;
 
 @SuppressWarnings("serial")
-public class View extends JFrame{
+public class View extends JFrame  {
 	
 	
 	private JPanel mainPanel;
@@ -24,7 +22,6 @@ public class View extends JFrame{
 	private JLabel cardDisplay;
 	
 	private GridBagConstraints gbc = new GridBagConstraints();
-	
 	public View() throws IOException 
 	{
 		super();		
@@ -62,15 +59,7 @@ public class View extends JFrame{
 	    cardDisplay.setIcon(new ImageIcon("card.png"));
 		mainPanel.setLayout(new GridLayout(4,0));
 		opponentHandPanel.setLayout(new GridLayout(0,7));
-		currentHandPanel.setLayout(new GridLayout(0,7));
-		
-
-		//testing panels
-		opponentHandPanel.add(new JButton("oHand"));
-		opponentFieldPanel.add((new JButton("oField")));
-		currentFieldPanel.add(new JButton("cField"));
-		currentHandPanel.add(new JButton("cHand"));
-		
+		currentHandPanel.setLayout(new GridLayout(0,7));		
 
 		mainPanel.add(opponentHandPanel);
 		mainPanel.add(opponentFieldPanel);
@@ -86,36 +75,24 @@ public class View extends JFrame{
 	public JButton getHeroPower() {
 		return heroPower;
 	}
-
 	public JLabel getCardDisplay() {
 		return cardDisplay;
 	}
-
 	public JPanel getMainPanel() {
 		return mainPanel;
 	}
-
-
 	public JPanel getCurrentHandPanel() {
 		return currentHandPanel;
 	}
-
-
 	public JPanel getOpponentHandPanel() {
 		return opponentHandPanel;
 	}
-
-
 	public JPanel getCurrentFieldPanel() {
 		return currentFieldPanel;
 	}
-
-
 	public JPanel getOpponentFieldPanel() {
 		return opponentFieldPanel;
 	}
-
-
 	public JPanel getInfo() {
 		return info;
 	}
@@ -135,4 +112,6 @@ public class View extends JFrame{
 	{
 		new View();
 	}
+
+	
 }
