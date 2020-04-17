@@ -26,7 +26,7 @@ class Selector extends JFrame implements ActionListener
 	private JRadioButton oMage = new JRadioButton("Mage");
 	private JRadioButton oHunter = new JRadioButton("Hunter");
 	private JRadioButton oWarlock = new JRadioButton("Warlock");
-	private JRadioButton oPriest = new JRadioButton("Paladin");
+	private JRadioButton oPriest = new JRadioButton("Priest");
 	public Selector()
 	{
 		this.setVisible(true);
