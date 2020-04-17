@@ -19,6 +19,7 @@ public class GameView extends JFrame  {
 	private JTextArea oText;
 	
 	private JButton heroPower;
+	private JButton endTurn;
 	private JLabel cardDisplay;
 	
 	private GridBagConstraints gbc = new GridBagConstraints();
@@ -47,6 +48,8 @@ public class GameView extends JFrame  {
 		
 		heroPower = new JButton("Hero Power");
 		heroPower.setFont(heroPower.getFont().deriveFont(32f));
+		endTurn = new JButton("endTurn");
+		endTurn.setFont(endTurn.getFont().deriveFont(32f));
 		cardDisplay = new JLabel();
 		
 	    addComp(info, oText, 0, 0, 1, 1, GridBagConstraints.BOTH, 1, 1);
@@ -65,8 +68,11 @@ public class GameView extends JFrame  {
 		mainPanel.add(opponentFieldPanel);
 		mainPanel.add(currentFieldPanel);
 		mainPanel.add(currentHandPanel);
-		this.add(heroPower,BorderLayout.SOUTH);
 		
+		JPanel buttonsBottom = new JPanel();
+		buttonsBottom.add(heroPower);
+		buttonsBottom.add(endTurn);
+		this.add(buttonsBottom,BorderLayout.SOUTH);
 		
 		this.revalidate();
 		this.repaint();
@@ -78,6 +84,10 @@ public class GameView extends JFrame  {
 	public JLabel getCardDisplay() {
 		return cardDisplay;
 	}
+	public JButton getEndTurn() {
+		return endTurn;
+	}
+
 	public JPanel getMainPanel() {
 		return mainPanel;
 	}

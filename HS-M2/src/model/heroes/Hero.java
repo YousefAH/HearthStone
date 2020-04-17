@@ -308,6 +308,10 @@ public abstract class Hero implements MinionListener {
 	public String getName() {
 		return name;
 	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	public void setValidator(ActionValidator validator) {
 		this.validator = validator;
