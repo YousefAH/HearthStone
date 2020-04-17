@@ -27,7 +27,7 @@ public class GameView extends JFrame  {
 	{
 		super();		
 		this.setVisible(true);
-		this.setBounds(500, 500, 1050, 650);
+		this.setBounds(500, 200, 1050, 650);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		oText = new JTextArea();
 		cText = new JTextArea();
