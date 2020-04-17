@@ -5,7 +5,7 @@ import java.io.IOException;
 import javax.swing.*;
 
 @SuppressWarnings("serial")
-public class View extends JFrame  {
+public class GameView extends JFrame  {
 	
 	
 	private JPanel mainPanel;
@@ -22,7 +22,7 @@ public class View extends JFrame  {
 	private JLabel cardDisplay;
 	
 	private GridBagConstraints gbc = new GridBagConstraints();
-	public View() throws IOException 
+	public GameView() throws IOException 
 	{
 		super();		
 		this.setVisible(true);
@@ -110,7 +110,7 @@ public class View extends JFrame  {
 	}
 	public static void main(String[] args) throws IOException
 	{
-		new View();
+		new GameView();
 	}
 
 	
