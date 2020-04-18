@@ -18,6 +18,7 @@ import model.cards.spells.*;
 import model.heroes.*;
 
 
+@SuppressWarnings("serial")
 class Selector extends JFrame implements ActionListener
 {
 	private ButtonGroup group1 = new ButtonGroup();
@@ -132,6 +133,8 @@ public class Controller implements ActionListener, GameListener
 	{
 		
 		model = new GameView();
+		model.setTitle("HearthStone");
+		model.getEndTurn().addActionListener(this);
 		g = new Game(p1, p2);
 		g.getCurrentHero().setCurrentManaCrystals(10);
 		model.getcText().setText(g.getCurrentHero().getName()+"\nMana: "+g.getCurrentHero().getCurrentManaCrystals()+"\nHp: "+g.getCurrentHero().getCurrentHP());
@@ -155,46 +158,71 @@ public class Controller implements ActionListener, GameListener
 		// TODO Auto-generated method stub
 		
 	}
-
+	public void endTurn()
+	{
+		try {
+			g.endTurn();
+			model.getcText().setText(g.getCurrentHero().getName()+"\nMana: "+g.getCurrentHero().getCurrentManaCrystals()+"\nHp: "+g.getCurrentHero().getCurrentHP());
+			model.getoText().setText(g.getOpponent().getName()+"\nMana: "+g.getOpponent().getCurrentManaCrystals()+"\nHp: "+g.getOpponent().getCurrentHP());
+			cHand = new ArrayList<JButton>();
+			oHand = new ArrayList<JButton>();
+			model.getCurrentHandPanel().removeAll();
+			model.getOpponentHandPanel().removeAll();
+			genButtonHand(g.getCurrentHero().getHand(), cHand,model.getCurrentHandPanel());
+			genButtonHand(g.getOpponent().getHand(), oHand,model.getOpponentHandPanel());
+		} catch (FullHandException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{		
-		try {
-			System.out.println(cHand.indexOf(e.getSource()));
-			if(cHand.indexOf(e.getSource())==-1)
-				throw new NotYourTurnException();
-			Card c = g.getCurrentHero().getHand().get(cHand.indexOf(e.getSource()));
-			Hero targetHero = null;
-			Minion targetMinion = null;
-			if (c instanceof Minion) {
-				g.getCurrentHero().playMinion((Minion) g.getCurrentHero().getHand().get(cHand.indexOf(e.getSource())));
-				model.getCurrentHandPanel().remove(cHand.indexOf(e.getSource()));
-				cField.add(cHand.get(cHand.indexOf(e.getSource())));
-				model.getCurrentFieldPanel().add(cHand.get(cHand.indexOf(e.getSource())));
-				cHand.remove(cHand.get(cHand.indexOf(e.getSource())));
+		
+		if (e.getActionCommand().equals("End Turn"))
+			endTurn();
+		else {
+			try {
+				if (cHand.indexOf(e.getSource()) == -1)
+					throw new NotYourTurnException();
+				Card c = g.getCurrentHero().getHand().get(cHand.indexOf(e.getSource()));
+				Hero targetHero = null;
+				Minion targetMinion = null;
+				if (c instanceof Minion) {
+					g.getCurrentHero()
+							.playMinion((Minion) g.getCurrentHero().getHand().get(cHand.indexOf(e.getSource())));
+					model.getCurrentHandPanel().remove(cHand.indexOf(e.getSource()));
+					cField.add(cHand.get(cHand.indexOf(e.getSource())));
+					model.getCurrentFieldPanel().add(cHand.get(cHand.indexOf(e.getSource())));
+					cHand.remove(cHand.get(cHand.indexOf(e.getSource())));
+				} else if (c instanceof Spell) {
+					if (c instanceof AOESpell)
+						g.getCurrentHero().castSpell((AOESpell) c, g.getOpponent().getField());
+					else if (c instanceof FieldSpell)
+						g.getCurrentHero().castSpell((FieldSpell) c);
+					else if (c instanceof HeroTargetSpell)
+						g.getCurrentHero().castSpell((HeroTargetSpell) c, targetHero);
+					else if (c instanceof LeechingSpell)
+						g.getCurrentHero().castSpell((LeechingSpell) c, targetMinion);
+					else if (c instanceof MinionTargetSpell)
+						g.getCurrentHero().castSpell((MinionTargetSpell) c, targetMinion);
+				}
+				model.getcText().setText(g.getCurrentHero().getName() + "\nMana: "
+						+ g.getCurrentHero().getCurrentManaCrystals() + "\nHp: " + g.getCurrentHero().getCurrentHP());
+			} catch (NotYourTurnException e1) {
+				JOptionPane.showMessageDialog(null, "Not Your Turn");
+			} catch (NotEnoughManaException e1) {
+				JOptionPane.showMessageDialog(null, "Not Enough Mana");
+			} catch (FullFieldException e1) {
+				JOptionPane.showMessageDialog(null, "Field is Full");
+			} catch (InvalidTargetException e1) {
+				JOptionPane.showMessageDialog(null, "Invalid Target");
 			}
-			else if (c instanceof Spell) {
-				if (c instanceof AOESpell)
-					g.getCurrentHero().castSpell((AOESpell) c, g.getOpponent().getField());
-				else if (c instanceof FieldSpell)
-					g.getCurrentHero().castSpell((FieldSpell) c);
-				else if (c instanceof HeroTargetSpell)
-					g.getCurrentHero().castSpell((HeroTargetSpell) c, targetHero);
-				else if (c instanceof LeechingSpell)
-					g.getCurrentHero().castSpell((LeechingSpell) c, targetMinion);
-				else if (c instanceof MinionTargetSpell)
-					g.getCurrentHero().castSpell((MinionTargetSpell) c, targetMinion);
-			}
-			model.getcText().setText(g.getCurrentHero().getName()+"\nMana: "+g.getCurrentHero().getCurrentManaCrystals()+"\nHp: "+g.getCurrentHero().getCurrentHP());
-		} catch (NotYourTurnException e1) {
-			JOptionPane.showMessageDialog(null, "Not Your Turn");
-		} catch (NotEnoughManaException e1) {
-			JOptionPane.showMessageDialog(null, "Not Enough Mana");
-		} catch (FullFieldException e1) {
-			JOptionPane.showMessageDialog(null, "Field is Full");
-		} catch (InvalidTargetException e1) {
-			JOptionPane.showMessageDialog(null, "Invalid Target");
 		}
+		model.repaint();
 	}
 
 	public static void main(String[] args) 

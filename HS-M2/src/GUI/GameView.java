@@ -48,7 +48,7 @@ public class GameView extends JFrame  {
 		
 		heroPower = new JButton("Hero Power");
 		heroPower.setFont(heroPower.getFont().deriveFont(32f));
-		endTurn = new JButton("endTurn");
+		endTurn = new JButton("End Turn");
 		endTurn.setFont(endTurn.getFont().deriveFont(32f));
 		cardDisplay = new JLabel();
 		
@@ -61,8 +61,8 @@ public class GameView extends JFrame  {
 	    oText.setText("Opponent");
 	    cardDisplay.setIcon(new ImageIcon("card.png"));
 		mainPanel.setLayout(new GridLayout(4,0));
-		opponentHandPanel.setLayout(new GridLayout(0,7));
-		currentHandPanel.setLayout(new GridLayout(0,7));		
+		opponentHandPanel.setLayout(new GridLayout(0,10));
+		currentHandPanel.setLayout(new GridLayout(0,10));		
 
 		mainPanel.add(opponentHandPanel);
 		mainPanel.add(opponentFieldPanel);
@@ -78,6 +78,14 @@ public class GameView extends JFrame  {
 		this.repaint();
 	}
 	
+	public void setCurrentHandPanel(JPanel currentHandPanel) {
+		this.currentHandPanel = currentHandPanel;
+	}
+
+	public void setOpponentHandPanel(JPanel opponentHandPanel) {
+		this.opponentHandPanel = opponentHandPanel;
+	}
+
 	public JButton getHeroPower() {
 		return heroPower;
 	}
