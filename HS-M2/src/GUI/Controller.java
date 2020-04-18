@@ -225,7 +225,7 @@ public class Controller implements ActionListener, GameListener
 					if (val == 1)
 						model.getCardDisplay().setIcon(new ImageIcon("images/" + e.getActionCommand() + ".png"));
 				} else if (c instanceof Spell) {
-					val = pop.showOptionDialog(null, "Actions", "", JOptionPane.DEFAULT_OPTION, 0, null,posibleValuesMinion, posibleValuesMinion[2]);
+					val = pop.showOptionDialog(null, "Actions", "", JOptionPane.DEFAULT_OPTION, 0, null,posibleValuesSpell, posibleValuesSpell[2]);
 					if (val == 0) {
 						if (c instanceof AOESpell)
 							g.getCurrentHero().castSpell((AOESpell) c, g.getOpponent().getField());
