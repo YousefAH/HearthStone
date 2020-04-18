@@ -27,7 +27,8 @@ public class GameView extends JFrame  {
 	{
 		super();		
 		this.setVisible(true);
-		this.setBounds(500, 200, 1050, 650);
+		this.setBounds(500, 200, 1100, 650);
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		oText = new JTextArea();
 		cText = new JTextArea();
@@ -37,7 +38,7 @@ public class GameView extends JFrame  {
 		this.add(mainPanel,BorderLayout.CENTER);
 		
 		
-		info.setPreferredSize(new Dimension(300,this.getHeight()));
+		info.setPreferredSize(new Dimension(350,this.getHeight()));
 		info.setLayout(new GridBagLayout());
 		
 			
@@ -78,6 +79,14 @@ public class GameView extends JFrame  {
 		this.repaint();
 	}
 	
+	public void setCurrentFieldPanel(JPanel currentFieldPanel) {
+		this.currentFieldPanel = currentFieldPanel;
+	}
+
+	public void setOpponentFieldPanel(JPanel opponentFieldPanel) {
+		this.opponentFieldPanel = opponentFieldPanel;
+	}
+
 	public void setCurrentHandPanel(JPanel currentHandPanel) {
 		this.currentHandPanel = currentHandPanel;
 	}
