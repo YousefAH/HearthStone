@@ -125,6 +125,7 @@ public class GameView extends JFrame  {
 	}
 
 	private void addComp(JPanel panel, JComponent comp, int x, int y, int gWidth, int gHeight, int fill, double weightx,double weighty) {
+		//https://stackoverflow.com/questions/42594962/making-a-component-span-multiple-rows-with-gridbaglayout
 		gbc.gridx = x;
 		gbc.gridy = y;
 		gbc.gridwidth = gWidth;
