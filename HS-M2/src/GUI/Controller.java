@@ -42,10 +42,10 @@ public class Controller implements ActionListener, GameListener {
 		model.getEndTurn().addActionListener(this);
 		g = new Game(p1, p2);
 		g.getCurrentHero().setCurrentManaCrystals(10);
-		model.getcText().setText(g.getCurrentHero().getName() + "\nMana: " + g.getCurrentHero().getCurrentManaCrystals()
-				+ "\nHp: " + g.getCurrentHero().getCurrentHP());
+		model.getcText().setText(g.getCurrentHero().getName() + "\nMana: "
+				+ g.getCurrentHero().getCurrentManaCrystals() + "\nHp: " + g.getCurrentHero().getCurrentHP() + "\nCards Left in Deck: "+ g.getCurrentHero().getDeck().size());
 		model.getoText().setText(g.getOpponent().getName() + "\nMana: " + g.getOpponent().getCurrentManaCrystals()
-				+ "\nHp: " + g.getOpponent().getCurrentHP());
+				+ "\nHp: " + g.getOpponent().getCurrentHP()+"\nCards Left in Deck: "+ g.getOpponent().getDeck().size());
 		genButtonHand(g.getCurrentHero().getHand(), cHand, model.getCurrentHandPanel());
 		genButtonHand(g.getOpponent().getHand(), oHand, model.getOpponentHandPanel());
 	}
@@ -94,9 +94,9 @@ public class Controller implements ActionListener, GameListener {
 	public void updateScreen()
 	{
 		model.getcText().setText(g.getCurrentHero().getName() + "\nMana: "
-				+ g.getCurrentHero().getCurrentManaCrystals() + "\nHp: " + g.getCurrentHero().getCurrentHP());
+				+ g.getCurrentHero().getCurrentManaCrystals() + "\nHp: " + g.getCurrentHero().getCurrentHP() + "\nCards Left in Deck: "+ g.getCurrentHero().getDeck().size());
 		model.getoText().setText(g.getOpponent().getName() + "\nMana: " + g.getOpponent().getCurrentManaCrystals()
-				+ "\nHp: " + g.getOpponent().getCurrentHP());
+				+ "\nHp: " + g.getOpponent().getCurrentHP()+"\nCards Left in Deck: "+ g.getOpponent().getDeck().size());
 		cHand = new ArrayList<JButton>();
 		oHand = new ArrayList<JButton>();
 		cField = new ArrayList<JButton>();
