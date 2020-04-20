@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
@@ -210,7 +211,7 @@ public class Selector extends JFrame implements ActionListener
 					this.dispose();
 				}
 			} catch (IOException | CloneNotSupportedException | FullHandException e1) {
-				e1.printStackTrace();
+				JOptionPane.showConfirmDialog(null, "an Error occured");
 			}
 	}
 	
