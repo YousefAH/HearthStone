@@ -28,6 +28,7 @@ public class Controller implements ActionListener, GameListener {
 	private ArrayList<JButton> oHand = new ArrayList<JButton>();
 	private Spell usedSpell;
 	private JButton s;
+	private Object attacker;
 	private String[] posibleValuesMinion = { "Summon", "View Details", "Cancel" };
 	private String[] posibleValuesMinionOnField = { "Attack", "View Details", "Cancel" };
 	private String[] possibleAttacker = {"Opponent","A Minion", "Cancel"};
@@ -90,29 +91,32 @@ public class Controller implements ActionListener, GameListener {
 		// TODO Auto-generated method stub
 
 	}
-
+	public void updateScreen()
+	{
+		model.getcText().setText(g.getCurrentHero().getName() + "\nMana: "
+				+ g.getCurrentHero().getCurrentManaCrystals() + "\nHp: " + g.getCurrentHero().getCurrentHP());
+		model.getoText().setText(g.getOpponent().getName() + "\nMana: " + g.getOpponent().getCurrentManaCrystals()
+				+ "\nHp: " + g.getOpponent().getCurrentHP());
+		cHand = new ArrayList<JButton>();
+		oHand = new ArrayList<JButton>();
+		cField = new ArrayList<JButton>();
+		oField = new ArrayList<JButton>();
+		model.getCurrentHandPanel().removeAll();
+		model.getOpponentHandPanel().removeAll();
+		model.getCurrentFieldPanel().removeAll();
+		model.getOpponentFieldPanel().removeAll();;
+		genButtonHand(g.getCurrentHero().getHand(), cHand, model.getCurrentHandPanel());
+		genButtonHand(g.getOpponent().getHand(), oHand, model.getOpponentHandPanel());
+		genButtonFieled(g.getCurrentHero().getField(), cField, model.getCurrentFieldPanel());
+		genButtonFieled(g.getOpponent().getField(), oField, model.getOpponentFieldPanel());
+		model.repaint();
+		model.revalidate();
+	}
 	public void endTurn() {
 		try {
+			//handle fullHandException properly
 			g.endTurn();
-			model.getcText().setText(g.getCurrentHero().getName() + "\nMana: "
-					+ g.getCurrentHero().getCurrentManaCrystals() + "\nHp: " + g.getCurrentHero().getCurrentHP());
-			model.getoText().setText(g.getOpponent().getName() + "\nMana: " + g.getOpponent().getCurrentManaCrystals()
-					+ "\nHp: " + g.getOpponent().getCurrentHP());
-			cHand = new ArrayList<JButton>();
-			oHand = new ArrayList<JButton>();
-			cField = new ArrayList<JButton>();
-			oField = new ArrayList<JButton>();
-			model.getCurrentHandPanel().removeAll();
-			model.getOpponentHandPanel().removeAll();
-			model.getCurrentFieldPanel().removeAll();
-			model.getOpponentFieldPanel().removeAll();;
-
-			genButtonHand(g.getCurrentHero().getHand(), cHand, model.getCurrentHandPanel());
-			genButtonHand(g.getOpponent().getHand(), oHand, model.getOpponentHandPanel());
-			genButtonFieled(g.getCurrentHero().getField(), cField, model.getCurrentFieldPanel());
-			genButtonFieled(g.getOpponent().getField(), oField, model.getOpponentFieldPanel());
-			model.repaint();
-			model.revalidate();
+			updateScreen();
 		} catch (FullHandException e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());
 		} catch (CloneNotSupportedException e) {
@@ -176,29 +180,51 @@ public class Controller implements ActionListener, GameListener {
 			usedSpell = null;
 
 		}
-		else if(c instanceof AOESpell)
+		else 
+		{
+		if(c instanceof AOESpell)
 			g.getCurrentHero().castSpell((AOESpell)c, g.getOpponent().getField());
 		else if(c instanceof FieldSpell)
 			g.getCurrentHero().castSpell((FieldSpell)c);
 		else
 			usedSpell = (Spell) c;
+		model.getCurrentHandPanel().remove(cHand.indexOf(s));
+		cHand.remove(cHand.indexOf(s));
+		}
+		updateScreen();
 		model.repaint();
 		model.revalidate();
 	}
 
 	public void attack(ActionEvent e, Card c) throws CannotAttackException, NotYourTurnException, TauntBypassException, NotSummonedException, InvalidTargetException
 	{
-		int val = JOptionPane.showOptionDialog(null, "Choose a Target", "", JOptionPane.DEFAULT_OPTION, 0, null, possibleAttacker, possibleAttacker[2]);
-		if(val == 0)
+		
+		
+		if(attacker != null)
 		{
-			g.getCurrentHero().attackWithMinion((Minion)c, g.getOpponent());
+			attacker = null;
+			System.out.println("is it here");
+			//needs to find a way to declare target minion
+			g.getCurrentHero().attackWithMinion(g.getCurrentHero().getField().get(cField.indexOf(attacker)), (Minion)c);
 		}
-		else if(val == 1)
+		else 
 		{
-			
+			int val = JOptionPane.showOptionDialog(null, "Choose a Target", "", JOptionPane.DEFAULT_OPTION, 0, null, possibleAttacker, possibleAttacker[2]);
+			if(val == 0)
+			{
+				g.getCurrentHero().attackWithMinion((Minion)c, g.getOpponent());
+			}
+			else if(val == 1)
+			{
+				if(attacker == null)
+					attacker = e.getSource();
+				else
+				{
+					
+				}
+			}
 		}
-		else
-			return;
+		updateScreen();
 	}
 	
 	public void actionPerformed(ActionEvent e) 
@@ -233,6 +259,14 @@ public class Controller implements ActionListener, GameListener {
 						model.repaint();
 					}
 					
+				}
+				else if(attacker != null)
+				{
+					if(oField.indexOf(e.getSource()) != -1)
+						c = g.getCurrentHero().getHand().get(oField.indexOf(e.getSource()));
+					else 
+						throw new InvalidTargetException("You can only attack Minions in your opponent's field");
+					attack(e,c);
 				}
 				else if (usedSpell == null) 
 				{
