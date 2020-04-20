@@ -2,6 +2,7 @@ package GUI;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.ImagingOpException;
 import java.io.IOException;
 import javax.swing.*;
 import java.util.*;
@@ -118,7 +119,8 @@ public class Controller implements ActionListener, GameListener {
 			g.endTurn();
 			updateScreen();
 		} catch (FullHandException e) {
-			JOptionPane.showMessageDialog(null, e.getMessage());
+			updateScreen();
+			JOptionPane.showMessageDialog(null, "","Your Hand was full, this card was burnt",JOptionPane.INFORMATION_MESSAGE,new ImageIcon("images/"+e.getBurned().getName()+".png"));
 		} catch (CloneNotSupportedException e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());
 		}
