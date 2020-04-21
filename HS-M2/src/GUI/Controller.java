@@ -31,6 +31,7 @@ public class Controller implements ActionListener, GameListener {
 	private Spell usedSpell;
 	private JButton s;
 	private Minion attacker;
+	private boolean powerTrigger;
 	private String[] posibleValuesMinion = { "Summon", "View Details", "Cancel" };
 	private String[] posibleValuesMinionOnField = { "Attack", "View Details", "Cancel" };
 	private String[] possibleAttacker = {"Opponent","A Minion", "Cancel"};
@@ -71,7 +72,6 @@ public class Controller implements ActionListener, GameListener {
 			l.add(b);
 			p.add(b);
 			b.addActionListener(this);
-
 		}
 	}
 	
@@ -118,6 +118,21 @@ public class Controller implements ActionListener, GameListener {
 		model.repaint();
 		model.revalidate();
 	}
+	public void viewDetails(ActionEvent e)
+	{
+		Minion c = null;
+		model.getCardDisplay().setIcon(new ImageIcon("images/" + e.getActionCommand() + ".png"));
+		if (cField.indexOf(e.getSource()) != -1) {
+			c = g.getCurrentHero().getField().get(cField.indexOf(e.getSource()));
+			model.getCardInfo().setText("Current Attack: "+c.getAttack()+"\nCurrent Hp: "+c.getCurrentHP());
+		}
+		else if (oField.indexOf(e.getSource()) != -1) {
+			c = g.getOpponent().getField().get(oField.indexOf(e.getSource()));
+			model.getCardInfo().setText("Current Attack: "+c.getAttack()+"\nCurrent Hp: "+c.getCurrentHP());
+		}
+		else
+			model.getCardInfo().setText("");
+	}
 	public void endTurn() throws FullHandException, CloneNotSupportedException 
 	{
 			g.endTurn();
@@ -135,7 +150,7 @@ public class Controller implements ActionListener, GameListener {
 			updateScreen();
 		}
 		if (val == 1)
-			model.getCardDisplay().setIcon(new ImageIcon("images/" + e.getActionCommand() + ".png"));
+			viewDetails(e);
 	}
 	
 	public void castSpell(ActionEvent e, Card c) throws NotYourTurnException, NotEnoughManaException, InvalidTargetException
@@ -216,13 +231,49 @@ public class Controller implements ActionListener, GameListener {
 	
 	public void heroPower() throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException, FullFieldException, CloneNotSupportedException
 	{
-		
-		g.getCurrentHero().useHeroPower();
-//		if(g.getCurrentHero() instanceof Paladin)
-//			cField.get(g.getCurrentHero().getField().size()-1).setIcon(new ImageIcon(""));
+		int val = -1;
+		if(g.getCurrentHero() instanceof Priest ) 
+		{
+			val = JOptionPane.showOptionDialog(null, "Choose a Targer", "", JOptionPane.DEFAULT_OPTION, 0, null, posibleValuesHeroSpell, posibleValuesHeroSpell[3]);
+			if(val == 0)
+				((Priest)g.getCurrentHero()).useHeroPower(g.getCurrentHero());
+			else if(val == 1)
+				((Priest)g.getCurrentHero()).useHeroPower(g.getOpponent());
+			else if(val == 2)
+				powerTrigger = true;
+		}
+		else if(g.getCurrentHero() instanceof Mage ) 
+		{
+			val = JOptionPane.showOptionDialog(null, "Choose a Targer", "", JOptionPane.DEFAULT_OPTION, 0, null, posibleValuesHeroSpell, posibleValuesHeroSpell[3]);
+			if(val == 0)
+				((Mage)g.getCurrentHero()).useHeroPower(g.getCurrentHero());
+			else if(val == 1)
+				((Mage)g.getCurrentHero()).useHeroPower(g.getOpponent());
+			else if(val == 2)
+				powerTrigger = true;
+		}
+		else
+			g.getCurrentHero().useHeroPower();
 		updateScreen();
 	}
 	
+	public void heroPower(ActionEvent e) throws InvalidTargetException, NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException, FullFieldException, CloneNotSupportedException
+	{
+		Minion c;
+		powerTrigger = !powerTrigger;
+		if (cField.indexOf(e.getSource()) != -1)
+			c = g.getCurrentHero().getField().get(cField.indexOf(e.getSource()));
+		else if (oField.indexOf(e.getSource()) != -1)
+			c = g.getOpponent().getField().get(oField.indexOf(e.getSource()));
+		else
+			throw new InvalidTargetException("You can only target minions on field");
+		
+		if(g.getCurrentHero() instanceof Priest ) 
+			((Priest)g.getCurrentHero()).useHeroPower(c);
+		else if(g.getCurrentHero() instanceof Mage ) 
+			((Mage)g.getCurrentHero()).useHeroPower(c);
+
+	}
 	public void actionPerformed(ActionEvent e) 
 	{
 		int val = -1;
@@ -232,6 +283,10 @@ public class Controller implements ActionListener, GameListener {
 				endTurn();
 			else if (e.getActionCommand().equals("Hero Power"))
 				heroPower();
+			else if(powerTrigger)
+			{
+				heroPower(e);
+			}
 			else if (attacker != null) {
 				if (oField.indexOf(e.getSource()) != -1)
 					c = g.getOpponent().getField().get(oField.indexOf(e.getSource()));
@@ -251,7 +306,7 @@ public class Controller implements ActionListener, GameListener {
 						s = (JButton) e.getSource();
 						castSpell(e, c);
 					} else if (val == 1)
-						model.getCardDisplay().setIcon(new ImageIcon("images/" + e.getActionCommand() + ".png"));
+						viewDetails(e);
 					model.repaint();
 				}
 
@@ -263,7 +318,7 @@ public class Controller implements ActionListener, GameListener {
 					val = JOptionPane.showOptionDialog(null, "Actions", "", JOptionPane.DEFAULT_OPTION, 0, null,
 							posibleValuesMinionOnField, posibleValuesMinionOnField[2]);
 					if (val == 1)
-						model.getCardDisplay().setIcon(new ImageIcon("images/" + e.getActionCommand() + ".png"));
+						viewDetails(e);
 					else if (val == 0)
 						attack(e, c);
 				} else if (oField.indexOf(e.getSource()) != -1) 
@@ -271,7 +326,7 @@ public class Controller implements ActionListener, GameListener {
 					c = g.getOpponent().getField().get(oField.indexOf(e.getSource()));
 					val = JOptionPane.showConfirmDialog(null, "View Details");
 					if (val == JOptionPane.YES_OPTION)
-						model.getCardDisplay().setIcon(new ImageIcon("images/" + e.getActionCommand() + ".png"));
+						viewDetails(e);
 				} else
 					throw new NotYourTurnException("This is not your turn");
 			} else if (usedSpell != null) 
@@ -322,13 +377,13 @@ public class Controller implements ActionListener, GameListener {
 					JOptionPane.INFORMATION_MESSAGE, new ImageIcon("images/" + e1.getBurned().getName() + ".png"));
 		} catch (CloneNotSupportedException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
+		} catch (Exception e1) {
+			JOptionPane.showMessageDialog(null, "UNEXPECTED ERROR PLEASE REPORT");
 		}
-		
 	}
 
 	public static void main(String[] args) {
 		new Selector();
-
 	}
 
 }

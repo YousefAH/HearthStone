@@ -21,6 +21,7 @@ public class GameView extends JFrame  {
 	private JButton heroPower;
 	private JButton endTurn;
 	private JLabel cardDisplay;
+	private JTextArea cardInfo;
 	
 	private GridBagConstraints gbc = new GridBagConstraints();
 	public GameView() throws IOException 
@@ -51,11 +52,16 @@ public class GameView extends JFrame  {
 		heroPower.setFont(heroPower.getFont().deriveFont(32f));
 		endTurn = new JButton("End Turn");
 		endTurn.setFont(endTurn.getFont().deriveFont(32f));
-		cardDisplay = new JLabel();
 		
+		cardDisplay = new JLabel();
+		cardInfo= new JTextArea();
+		cardInfo.setOpaque(false);
+		cardInfo.setFont(cardInfo.getFont().deriveFont(24f));
+		cardInfo.setEditable(false);
 	    addComp(info, oText, 0, 0, 1, 1, GridBagConstraints.BOTH, 1, 1);
 	    addComp(info, cardDisplay, 0, 1, 1, 1, GridBagConstraints.BOTH, 1, 1);
-	    addComp(info, cText, 0, 2, 1, 1, GridBagConstraints.BOTH, 1, 1);
+	    addComp(info, cardInfo, 0, 2, 1, 1, GridBagConstraints.BOTH, 1, 1);
+	    addComp(info, cText, 0, 3, 1, 1, GridBagConstraints.BOTH, 1, 1);
 	    
 	    this.add(info,BorderLayout.EAST);
 	    cText.setText("current Hero");
@@ -79,6 +85,10 @@ public class GameView extends JFrame  {
 		this.repaint();
 	}
 	
+	public JTextArea getCardInfo() {
+		return cardInfo;
+	}
+
 	public void setCurrentFieldPanel(JPanel currentFieldPanel) {
 		this.currentFieldPanel = currentFieldPanel;
 	}
