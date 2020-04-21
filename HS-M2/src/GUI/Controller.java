@@ -45,9 +45,10 @@ public class Controller implements ActionListener, GameListener {
 		model.setTitle("HearthStone");
 		model.getEndTurn().addActionListener(this);
 		model.getHeroPower().addActionListener(this);
-
+		
 		g = new Game(p1, p2);
-		g.getCurrentHero().setCurrentManaCrystals(10);
+		g.setListener(this);
+		g.getCurrentHero().setCurrentHP(1);
 		model.getcText().setText(g.getCurrentHero().getName() + "\nMana: "
 				+ g.getCurrentHero().getCurrentManaCrystals() + "\nHp: " + g.getCurrentHero().getCurrentHP() + "\nCards Left in Deck: "+ g.getCurrentHero().getDeck().size());
 		model.getoText().setText(g.getOpponent().getName() + "\nMana: " + g.getOpponent().getCurrentManaCrystals()
@@ -93,9 +94,13 @@ public class Controller implements ActionListener, GameListener {
 		}
 	}
 
-	public void onGameOver() {
-		// TODO Auto-generated method stub
-
+	public void onGameOver() 
+	{
+		Hero winner = (g.getCurrentHero().getCurrentHP()==0)? g.getCurrentHero():g.getOpponent();
+		String[] o = {"Close Window"};
+		int val = JOptionPane.showOptionDialog(null, winner.getName()+" won", "Winner!!", JOptionPane.DEFAULT_OPTION, 0, null, o,o[0]);
+		if(val == -1 || val == 0)
+			model.dispatchEvent(new WindowEvent(model, WindowEvent.WINDOW_CLOSING));
 	}
 	public void updateScreen()
 	{
