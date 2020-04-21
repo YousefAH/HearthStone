@@ -4,6 +4,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.ImagingOpException;
 import java.io.IOException;
+import java.io.ObjectInputStream.GetField;
+
 import javax.swing.*;
 import java.util.*;
 import engine.*;
@@ -29,14 +31,15 @@ public class Controller implements ActionListener, GameListener {
 	private ArrayList<JButton> oHand = new ArrayList<JButton>();
 	private Spell usedSpell;
 	private JButton s;
-	private Object attacker;
+	private Minion attacker;
 	private String[] posibleValuesMinion = { "Summon", "View Details", "Cancel" };
 	private String[] posibleValuesMinionOnField = { "Attack", "View Details", "Cancel" };
 	private String[] possibleAttacker = {"Opponent","A Minion", "Cancel"};
 	private String[] posibleValuesSpell = { "Activate", "View Details", "Cancel" };
 	private String[] posibleValuesHeroSpell = { "Myself", "Opponent","A Minion", "Cancel" };
 
-	public Controller(Hero p1, Hero p2) throws IOException, FullHandException, CloneNotSupportedException {
+	public Controller(Hero p1, Hero p2) throws IOException, FullHandException, CloneNotSupportedException 
+	{
 
 		model = new GameView();
 		model.setTitle("HearthStone");
@@ -51,7 +54,8 @@ public class Controller implements ActionListener, GameListener {
 		genButtonHand(g.getOpponent().getHand(), oHand, model.getOpponentHandPanel());
 	}
 
-	public void genButtonHand(ArrayList<Card> hand, ArrayList<JButton> l, JPanel p) {
+	public void genButtonHand(ArrayList<Card> hand, ArrayList<JButton> l, JPanel p)
+	{
 		for (int i = 0; i < hand.size(); i++) {
 			JButton b = new JButton(hand.get(i).getName());
 			ImageIcon icon;
@@ -134,10 +138,7 @@ public class Controller implements ActionListener, GameListener {
 				posibleValuesMinion, posibleValuesMinion[2]);
 		if (val == 0) {
 			g.getCurrentHero().playMinion((Minion) c);
-			model.getCurrentHandPanel().remove(cHand.indexOf(e.getSource()));
-			cField.add(cHand.get(cHand.indexOf(e.getSource())));
-			model.getCurrentFieldPanel().add(cHand.get(cHand.indexOf(e.getSource())));
-			cHand.remove(cHand.get(cHand.indexOf(e.getSource())));
+			updateScreen();
 		}
 		if (val == 1)
 			model.getCardDisplay().setIcon(new ImageIcon("images/" + e.getActionCommand() + ".png"));
@@ -201,30 +202,20 @@ public class Controller implements ActionListener, GameListener {
 	public void attack(ActionEvent e, Card c) throws CannotAttackException, NotYourTurnException, TauntBypassException, NotSummonedException, InvalidTargetException
 	{
 		
-		
 		if(attacker != null)
 		{
+			g.getCurrentHero().attackWithMinion(attacker, (Minion)c);
 			attacker = null;
-			System.out.println("is it here");
-			//needs to find a way to declare target minion
-			g.getCurrentHero().attackWithMinion(g.getCurrentHero().getField().get(cField.indexOf(attacker)), (Minion)c);
 		}
 		else 
 		{
 			int val = JOptionPane.showOptionDialog(null, "Choose a Target", "", JOptionPane.DEFAULT_OPTION, 0, null, possibleAttacker, possibleAttacker[2]);
 			if(val == 0)
-			{
 				g.getCurrentHero().attackWithMinion((Minion)c, g.getOpponent());
-			}
 			else if(val == 1)
-			{
 				if(attacker == null)
-					attacker = e.getSource();
-				else
-				{
-					
-				}
-			}
+					attacker = (Minion)c;
+			
 		}
 		updateScreen();
 	}
@@ -238,7 +229,15 @@ public class Controller implements ActionListener, GameListener {
 		else {
 			try {
 				Card c;
-				if(cHand.indexOf(e.getSource()) != -1)
+				if(attacker != null)
+				{
+					if(oField.indexOf(e.getSource()) != -1)
+						c = g.getOpponent().getField().get(oField.indexOf(e.getSource()));
+					else 
+						throw new InvalidTargetException("You can only attack Minions in your opponent's field");
+					attack(e,c);
+				}
+				else if(cHand.indexOf(e.getSource()) != -1)
 				{
 					c = g.getCurrentHero().getHand().get(cHand.indexOf(e.getSource()));
 					if (c instanceof Minion) 
@@ -261,15 +260,7 @@ public class Controller implements ActionListener, GameListener {
 						model.repaint();
 					}
 					
-				}
-				else if(attacker != null)
-				{
-					if(oField.indexOf(e.getSource()) != -1)
-						c = g.getCurrentHero().getHand().get(oField.indexOf(e.getSource()));
-					else 
-						throw new InvalidTargetException("You can only attack Minions in your opponent's field");
-					attack(e,c);
-				}
+				} 
 				else if (usedSpell == null) 
 				{
 					if (cField.indexOf(e.getSource()) != -1) 
@@ -314,18 +305,24 @@ public class Controller implements ActionListener, GameListener {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
 			} catch (NotEnoughManaException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
+				usedSpell = null;
 			} catch (InvalidTargetException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
+				attacker = null;
+				usedSpell = null;
 			}catch (FullFieldException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());	
 			}catch (NullPointerException e1) {
 				JOptionPane.showMessageDialog(null, "Not Your turn");
 			} catch (CannotAttackException e1) {
-				JOptionPane.showMessageDialog(null, e1.getMessage());	
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				attacker = null;
 			} catch (TauntBypassException e1) {
-				JOptionPane.showMessageDialog(null, e1.getMessage());	
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				attacker = null;
 			} catch (NotSummonedException e1) {
-				JOptionPane.showMessageDialog(null, e1.getMessage());	
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				attacker = null;
 			}
 		}
 	}
