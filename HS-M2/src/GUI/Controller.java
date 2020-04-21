@@ -2,9 +2,7 @@ package GUI;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.image.ImagingOpException;
 import java.io.IOException;
-import java.io.ObjectInputStream.GetField;
 
 import javax.swing.*;
 import java.util.*;
@@ -12,6 +10,7 @@ import engine.*;
 import exceptions.CannotAttackException;
 import exceptions.FullFieldException;
 import exceptions.FullHandException;
+import exceptions.HeroPowerAlreadyUsedException;
 import exceptions.InvalidTargetException;
 import exceptions.NotEnoughManaException;
 import exceptions.NotSummonedException;
@@ -44,6 +43,8 @@ public class Controller implements ActionListener, GameListener {
 		model = new GameView();
 		model.setTitle("HearthStone");
 		model.getEndTurn().addActionListener(this);
+		model.getHeroPower().addActionListener(this);
+
 		g = new Game(p1, p2);
 		g.getCurrentHero().setCurrentManaCrystals(10);
 		model.getcText().setText(g.getCurrentHero().getName() + "\nMana: "
@@ -117,17 +118,10 @@ public class Controller implements ActionListener, GameListener {
 		model.repaint();
 		model.revalidate();
 	}
-	public void endTurn() {
-		try {
-			//handle fullHandException properly
+	public void endTurn() throws FullHandException, CloneNotSupportedException 
+	{
 			g.endTurn();
 			updateScreen();
-		} catch (FullHandException e) {
-			updateScreen();
-			JOptionPane.showMessageDialog(null, "","Your Hand was full, this card was burnt",JOptionPane.INFORMATION_MESSAGE,new ImageIcon("images/"+e.getBurned().getName()+".png"));
-		} catch (CloneNotSupportedException e) {
-			JOptionPane.showMessageDialog(null, e.getMessage());
-		}
 	}
 	
 	public void summonMinion(ActionEvent e,Card c) throws NotYourTurnException , NotEnoughManaException, FullFieldException
@@ -220,111 +214,116 @@ public class Controller implements ActionListener, GameListener {
 		updateScreen();
 	}
 	
+	public void heroPower() throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException, FullFieldException, CloneNotSupportedException
+	{
+		
+		g.getCurrentHero().useHeroPower();
+//		if(g.getCurrentHero() instanceof Paladin)
+//			cField.get(g.getCurrentHero().getField().size()-1).setIcon(new ImageIcon(""));
+		updateScreen();
+	}
+	
 	public void actionPerformed(ActionEvent e) 
 	{
 		int val = -1;
-		
-		if (e.getActionCommand().equals("End Turn"))
-			endTurn();
-		else {
-			try {
-				Card c;
-				if(attacker != null)
-				{
-					if(oField.indexOf(e.getSource()) != -1)
-						c = g.getOpponent().getField().get(oField.indexOf(e.getSource()));
-					else 
-						throw new InvalidTargetException("You can only attack Minions in your opponent's field");
-					attack(e,c);
+		try {
+			Card c;
+			if (e.getActionCommand().equals("End Turn"))
+				endTurn();
+			else if (e.getActionCommand().equals("Hero Power"))
+				heroPower();
+			else if (attacker != null) {
+				if (oField.indexOf(e.getSource()) != -1)
+					c = g.getOpponent().getField().get(oField.indexOf(e.getSource()));
+				else
+					throw new InvalidTargetException("You can only attack Minions in your opponent's field");
+				attack(e, c);
+			} else if (cHand.indexOf(e.getSource()) != -1) {
+				c = g.getCurrentHero().getHand().get(cHand.indexOf(e.getSource()));
+				if (c instanceof Minion) {
+					usedSpell = null;
+					summonMinion(e, c);
+				} else {
+					usedSpell = null;
+					val = JOptionPane.showOptionDialog(null, "Actions", "", JOptionPane.DEFAULT_OPTION, 0, null,
+							posibleValuesSpell, posibleValuesSpell[2]);
+					if (val == 0) {
+						s = (JButton) e.getSource();
+						castSpell(e, c);
+					} else if (val == 1)
+						model.getCardDisplay().setIcon(new ImageIcon("images/" + e.getActionCommand() + ".png"));
+					model.repaint();
 				}
-				else if(cHand.indexOf(e.getSource()) != -1)
-				{
-					c = g.getCurrentHero().getHand().get(cHand.indexOf(e.getSource()));
-					if (c instanceof Minion) 
-					{
-						usedSpell = null;
-						summonMinion(e,c);
-					}
-					else
-					{
-						usedSpell = null;
-						val = JOptionPane.showOptionDialog(null, "Actions", "", JOptionPane.DEFAULT_OPTION, 0, null,
-								posibleValuesSpell, posibleValuesSpell[2]);
-						if(val == 0) 
-						{
-							s = (JButton)e.getSource();
-							castSpell(e,c);
-						}
-						 else if (val == 1)
-							model.getCardDisplay().setIcon(new ImageIcon("images/" + e.getActionCommand() + ".png"));
-						model.repaint();
-					}
-					
-				} 
-				else if (usedSpell == null) 
-				{
-					if (cField.indexOf(e.getSource()) != -1) 
-					{
-						c = g.getCurrentHero().getField().get(cField.indexOf(e.getSource()));
-						val = JOptionPane.showOptionDialog(null, "Actions", "", JOptionPane.DEFAULT_OPTION, 0, null, posibleValuesMinionOnField, posibleValuesMinionOnField[2]);
-						if(val == 1)
-							model.getCardDisplay().setIcon(new ImageIcon("images/" + e.getActionCommand() + ".png"));
-						else if(val == 0)
-							attack(e,c);
-					}
-					else if (oField.indexOf(e.getSource()) != -1)
-					{
-						c = g.getOpponent().getField().get(oField.indexOf(e.getSource()));
-						val = JOptionPane.showConfirmDialog(null, "View Details");
-						if(val == JOptionPane.YES_OPTION)
-							model.getCardDisplay().setIcon(new ImageIcon("images/" + e.getActionCommand() + ".png"));
-					}
-					else 
-						throw new NotYourTurnException("This is not your turn");
-				}
-				else if (usedSpell != null)
-				{
-					if (cField.indexOf(e.getSource()) != -1) 
-						c = g.getCurrentHero().getField().get(cField.indexOf(e.getSource()));						
-					else if (oField.indexOf(e.getSource()) != -1)
-						c = g.getOpponent().getField().get(oField.indexOf(e.getSource()));
-					else 
-						throw new InvalidTargetException("You cannot target cards in your opponent's hand");
-					castSpell(e, c);
-				}
-				
-				
-				model.getcText().setText(g.getCurrentHero().getName() + "\nMana: "
-						+ g.getCurrentHero().getCurrentManaCrystals() + "\nHp: " + g.getCurrentHero().getCurrentHP());
-				model.getoText().setText(g.getOpponent().getName() + "\nMana: "
-						+ g.getOpponent().getCurrentManaCrystals() + "\nHp: " + g.getOpponent().getCurrentHP());
-				
-				model.repaint();
 
-			} catch (NotYourTurnException e1) {
-				JOptionPane.showMessageDialog(null, e1.getMessage());
-			} catch (NotEnoughManaException e1) {
-				JOptionPane.showMessageDialog(null, e1.getMessage());
-				usedSpell = null;
-			} catch (InvalidTargetException e1) {
-				JOptionPane.showMessageDialog(null, e1.getMessage());
-				attacker = null;
-				usedSpell = null;
-			}catch (FullFieldException e1) {
-				JOptionPane.showMessageDialog(null, e1.getMessage());	
-			}catch (NullPointerException e1) {
-				JOptionPane.showMessageDialog(null, "Not Your turn");
-			} catch (CannotAttackException e1) {
-				JOptionPane.showMessageDialog(null, e1.getMessage());
-				attacker = null;
-			} catch (TauntBypassException e1) {
-				JOptionPane.showMessageDialog(null, e1.getMessage());
-				attacker = null;
-			} catch (NotSummonedException e1) {
-				JOptionPane.showMessageDialog(null, e1.getMessage());
-				attacker = null;
+			} else if (usedSpell == null)
+			{
+				if (cField.indexOf(e.getSource()) != -1) 
+				{
+					c = g.getCurrentHero().getField().get(cField.indexOf(e.getSource()));
+					val = JOptionPane.showOptionDialog(null, "Actions", "", JOptionPane.DEFAULT_OPTION, 0, null,
+							posibleValuesMinionOnField, posibleValuesMinionOnField[2]);
+					if (val == 1)
+						model.getCardDisplay().setIcon(new ImageIcon("images/" + e.getActionCommand() + ".png"));
+					else if (val == 0)
+						attack(e, c);
+				} else if (oField.indexOf(e.getSource()) != -1) 
+				{
+					c = g.getOpponent().getField().get(oField.indexOf(e.getSource()));
+					val = JOptionPane.showConfirmDialog(null, "View Details");
+					if (val == JOptionPane.YES_OPTION)
+						model.getCardDisplay().setIcon(new ImageIcon("images/" + e.getActionCommand() + ".png"));
+				} else
+					throw new NotYourTurnException("This is not your turn");
+			} else if (usedSpell != null) 
+			{
+				if (cField.indexOf(e.getSource()) != -1)
+					c = g.getCurrentHero().getField().get(cField.indexOf(e.getSource()));
+				else if (oField.indexOf(e.getSource()) != -1)
+					c = g.getOpponent().getField().get(oField.indexOf(e.getSource()));
+				else
+					throw new InvalidTargetException("You cannot target cards in your opponent's hand");
+				castSpell(e, c);
 			}
+
+			model.getcText().setText(g.getCurrentHero().getName() + "\nMana: "
+					+ g.getCurrentHero().getCurrentManaCrystals() + "\nHp: " + g.getCurrentHero().getCurrentHP());
+			model.getoText().setText(g.getOpponent().getName() + "\nMana: " + g.getOpponent().getCurrentManaCrystals()
+					+ "\nHp: " + g.getOpponent().getCurrentHP());
+
+			model.repaint();
+
+		} catch (NotYourTurnException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+		} catch (NotEnoughManaException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+			usedSpell = null;
+		} catch (InvalidTargetException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+			attacker = null;
+			usedSpell = null;
+		} catch (FullFieldException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+		} catch (NullPointerException e1) {
+			JOptionPane.showMessageDialog(null, "Not Your turn");
+		} catch (CannotAttackException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+			attacker = null;
+		} catch (TauntBypassException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+			attacker = null;
+		} catch (NotSummonedException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+			attacker = null;
+		} catch (HeroPowerAlreadyUsedException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+		} catch (FullHandException e1) {
+			updateScreen();
+			JOptionPane.showMessageDialog(null, "", "Your Hand was full, this card was burnt",
+					JOptionPane.INFORMATION_MESSAGE, new ImageIcon("images/" + e1.getBurned().getName() + ".png"));
+		} catch (CloneNotSupportedException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
+		
 	}
 
 	public static void main(String[] args) {
