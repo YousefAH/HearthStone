@@ -54,6 +54,7 @@ public class GameView extends JFrame  {
 		endTurn.setFont(endTurn.getFont().deriveFont(32f));
 		
 		cardDisplay = new JLabel();
+		cardDisplay.setSize(info.getWidth(),(int)(info.getHeight()*0.3));
 		cardInfo= new JTextArea();
 		cardInfo.setOpaque(false);
 		cardInfo.setFont(cardInfo.getFont().deriveFont(24f));
@@ -66,7 +67,7 @@ public class GameView extends JFrame  {
 	    this.add(info,BorderLayout.EAST);
 	    cText.setText("current Hero");
 	    oText.setText("Opponent");
-	    cardDisplay.setIcon(new ImageIcon("card.png"));
+	    cardDisplay.setIcon(new ImageIcon("images/card.png"));
 		mainPanel.setLayout(new GridLayout(4,0));
 		opponentHandPanel.setLayout(new GridLayout(0,10));
 		currentHandPanel.setLayout(new GridLayout(0,10));		

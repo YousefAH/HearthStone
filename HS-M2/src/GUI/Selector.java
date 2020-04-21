@@ -2,11 +2,15 @@ package GUI;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.Enumeration;
 
+import javax.imageio.ImageIO;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -26,6 +30,7 @@ import model.heroes.Paladin;
 import model.heroes.Priest;
 import model.heroes.Warlock;
 
+@SuppressWarnings("serial")
 public class Selector extends JFrame implements ActionListener
 {
 	private ButtonGroup group1 = new ButtonGroup();
@@ -49,7 +54,7 @@ public class Selector extends JFrame implements ActionListener
 	
 	private JPanel main = new JPanel();
 	private GridBagConstraints gbc = new GridBagConstraints();
-	public Selector()
+	public Selector() throws IOException
 	{
 		this.setVisible(true);
 		this.setBounds(500, 200, 1100, 650);
@@ -66,22 +71,50 @@ public class Selector extends JFrame implements ActionListener
 		label1.setFont(label1.getFont().deriveFont(32f));
 		addComp(main, label1, 0, 0, 1, 1, 0, 1, 1);
 		
-		JLabel paladin1 = new JLabel(new ImageIcon("images/Paladin.png"));
-		JLabel warlock1 = new JLabel(new ImageIcon("images/Warlock.png"));
-		JLabel priest1 = new JLabel(new ImageIcon("images/Priest.png"));
-		JLabel hunter1 = new JLabel(new ImageIcon("images/Hunter.png"));
-		JLabel mage1 = new JLabel(new ImageIcon("images/Mage.png"));
-		JLabel paladin2 = new JLabel(new ImageIcon("images/Paladin.png"));
-		JLabel warlock2 = new JLabel(new ImageIcon("images/Warlock.png"));
-		JLabel priest2 = new JLabel(new ImageIcon("images/Priest.png"));
-		JLabel hunter2 = new JLabel(new ImageIcon("images/Hunter.png"));
-		JLabel mage2 = new JLabel(new ImageIcon("images/Mage.png"));
+		BufferedImage paladin0 = ImageIO.read(new File("images/Paladin.png"));
+		BufferedImage warlock0 = ImageIO.read(new File("images/Warlock.png"));
+		BufferedImage priest0 = ImageIO.read(new File("images/Priest.png"));
+		BufferedImage hunter0 = ImageIO.read(new File("images/Hunter.png"));
+		BufferedImage mage0 = ImageIO.read(new File("images/Mage.png"));
+		BufferedImage[] icons0 = {paladin0, warlock0, priest0, hunter0,mage0};
+		
+		ImageIcon paladin = null;
+		ImageIcon warlock = null;
+		ImageIcon priest  = null;
+		ImageIcon hunter = null ;
+		ImageIcon mage  = null;
+		ImageIcon[] icons = {paladin, warlock, priest, hunter,mage};
+		
+		JLabel paladin1 =  new JLabel();
+		JLabel warlock1 =  new JLabel();
+		JLabel priest1 =  new JLabel();
+		JLabel hunter1 =  new JLabel();
+		JLabel mage1 =  new JLabel();
+		JLabel[] labelic1 = {paladin1, warlock1, priest1, hunter1,mage1};
+		
+		JLabel paladin2 = new JLabel();
+		JLabel warlock2 =  new JLabel();
+		JLabel priest2 =  new JLabel();
+		JLabel hunter2 =  new JLabel();
+		JLabel mage2 =  new JLabel();
+		JLabel[] labelic2 = {paladin2, warlock2, priest2, hunter2,mage2};
+		
+		for (int i = 0; i < labelic1.length; i++) 
+		{
+			Image img = icons0[i].getScaledInstance((int)(this.getWidth()*0.2), (int)(this.getHeight()*0.2),Image.SCALE_SMOOTH);
+			icons[i] = new ImageIcon(img);
+			labelic1[i] = new JLabel(icons[i]); 
+			labelic2[i] = new JLabel(icons[i]); 
+
+		}
+
 				
 		player1Images.add(paladin1);
 		player1Images.add(mage1);
 		player1Images.add(hunter1);
 		player1Images.add(warlock1);
 		player1Images.add(priest1);
+		player1Images.setSize(1, 1);
 		addComp(main, player1Images, 0, 1, 1, 1, 0, 1, 1);
 
 	    GridLayout layout = new GridLayout(0,5);
@@ -211,11 +244,11 @@ public class Selector extends JFrame implements ActionListener
 					this.dispose();
 				}
 			} catch (IOException | CloneNotSupportedException | FullHandException e1) {
-				JOptionPane.showConfirmDialog(null, "an Error occured");
+				JOptionPane.showConfirmDialog(null, e1.getMessage());
 			}
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		new Selector();
 	}
 }
