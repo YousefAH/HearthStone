@@ -1,34 +1,18 @@
 package GUI;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.Enumeration;
 
-import javax.imageio.ImageIO;
-import javax.swing.AbstractButton;
-import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
+import javax.swing.*;
 
 import exceptions.FullHandException;
-import model.heroes.Hero;
-import model.heroes.Hunter;
-import model.heroes.Mage;
-import model.heroes.Paladin;
-import model.heroes.Priest;
-import model.heroes.Warlock;
+import model.heroes.*;
 
 @SuppressWarnings("serial")
 public class Selector extends JFrame implements ActionListener
@@ -41,72 +25,57 @@ public class Selector extends JFrame implements ActionListener
 	private JPanel player2Buttons = new JPanel();
 	private JPanel player2Images = new JPanel();
 	
-	private JRadioButton cPaladin = new JRadioButton("Paladin");
-	private JRadioButton cMage = new JRadioButton("Mage");
-	private JRadioButton cHunter = new JRadioButton("Hunter");
-	private JRadioButton cWarlock = new JRadioButton("Warlock");
-	private JRadioButton cPriest = new JRadioButton("Priest");
-	private JRadioButton oPaladin = new JRadioButton("Paladin");
-	private JRadioButton oMage = new JRadioButton("Mage");
-	private JRadioButton oHunter = new JRadioButton("Hunter");
-	private JRadioButton oWarlock = new JRadioButton("Warlock");
-	private JRadioButton oPriest = new JRadioButton("Priest");
+	private JRadioButton cPaladin = new JRadioButton("<html><font color='white'>Paladin</font></html>");
+	private JRadioButton cMage = new JRadioButton("<html><font color='white'>Mage</font></html>");
+	private JRadioButton cHunter = new JRadioButton("<html><font color='white'>Hunter</font></html>");
+	private JRadioButton cWarlock = new JRadioButton("<html><font color='white'>Warlock</font></html>");
+	private JRadioButton cPriest = new JRadioButton("<html><font color='white'>Priest</font></html>");
+	private JRadioButton oPaladin = new JRadioButton("<html><font color='white'>Paladin</font></html>");
+	private JRadioButton oMage = new JRadioButton("<html><font color='white'>Mage</font></html>");
+	private JRadioButton oHunter = new JRadioButton("<html><font color='white'>Hunter</font></html>");
+	private JRadioButton oWarlock = new JRadioButton("<html><font color='white'>Warlock</font></html>");
+	private JRadioButton oPriest = new JRadioButton("<html><font color='white'>Priest</font></html>");
 	
 	private JPanel main = new JPanel();
 	private GridBagConstraints gbc = new GridBagConstraints();
 	public Selector() throws IOException
 	{
+		
 		this.setVisible(true);
+		setLayout(new BorderLayout());
+		setContentPane((new JLabel(new ImageIcon("images/Selector Background.png"))));
+		setResizable(false);
+		setLayout(new FlowLayout());		
 		this.setBounds(500, 200, 1100, 650);
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		JLabel back = new JLabel();
-        back.setIcon(new ImageIcon("images/Selector Background.png"));
-
 		main.setLayout(new GridBagLayout());
 		main.setOpaque(false);
 		
-		this.add(back);
-		JLabel label1 = new JLabel("Player one");
+		JLabel label1 = new JLabel("<html><font color='white'>Player 1</font></html>");
 		label1.setFont(label1.getFont().deriveFont(32f));
 		addComp(main, label1, 0, 0, 1, 1, 0, 1, 1);
 		
-		BufferedImage paladin0 = ImageIO.read(new File("images/Paladin.png"));
-		BufferedImage warlock0 = ImageIO.read(new File("images/Warlock.png"));
-		BufferedImage priest0 = ImageIO.read(new File("images/Priest.png"));
-		BufferedImage hunter0 = ImageIO.read(new File("images/Hunter.png"));
-		BufferedImage mage0 = ImageIO.read(new File("images/Mage.png"));
-		BufferedImage[] icons0 = {paladin0, warlock0, priest0, hunter0,mage0};
 		
-		ImageIcon paladin = null;
-		ImageIcon warlock = null;
-		ImageIcon priest  = null;
-		ImageIcon hunter = null ;
-		ImageIcon mage  = null;
-		ImageIcon[] icons = {paladin, warlock, priest, hunter,mage};
+		ImageIcon paladin = new ImageIcon("images/Paladin.png");
+		ImageIcon warlock = new ImageIcon("images/Warlock.png");
+		ImageIcon priest  = new ImageIcon("images/Priest.png");
+		ImageIcon hunter = new ImageIcon("images/Hunter.png");
+		ImageIcon mage  = new ImageIcon("images/Mage.png");
 		
-		JLabel paladin1 =  new JLabel();
-		JLabel warlock1 =  new JLabel();
-		JLabel priest1 =  new JLabel();
-		JLabel hunter1 =  new JLabel();
-		JLabel mage1 =  new JLabel();
-		JLabel[] labelic1 = {paladin1, warlock1, priest1, hunter1,mage1};
+		JLabel paladin1 =  new JLabel(paladin);
+		JLabel warlock1 =  new JLabel(warlock);
+		JLabel priest1 =  new JLabel(priest);
+		JLabel hunter1 =  new JLabel(hunter);
+		JLabel mage1 =  new JLabel(mage);
 		
-		JLabel paladin2 = new JLabel();
-		JLabel warlock2 =  new JLabel();
-		JLabel priest2 =  new JLabel();
-		JLabel hunter2 =  new JLabel();
-		JLabel mage2 =  new JLabel();
-		JLabel[] labelic2 = {paladin2, warlock2, priest2, hunter2,mage2};
+		JLabel paladin2 =  new JLabel(paladin);
+		JLabel warlock2 =  new JLabel(warlock);
+		JLabel priest2 =  new JLabel(priest);
+		JLabel hunter2 =  new JLabel(hunter);
+		JLabel mage2 =  new JLabel(mage);
 		
-		for (int i = 0; i < labelic1.length; i++) 
-		{
-			Image img = icons0[i].getScaledInstance((int)(this.getWidth()*0.2), (int)(this.getHeight()*0.2),Image.SCALE_SMOOTH);
-			icons[i] = new ImageIcon(img);
-			labelic1[i] = new JLabel(icons[i]); 
-			labelic2[i] = new JLabel(icons[i]); 
-
-		}
+		
 
 				
 		player1Images.add(paladin1);
@@ -140,7 +109,7 @@ public class Selector extends JFrame implements ActionListener
 		group1.add(cPriest);
 		addComp(main, player1Buttons, 0, 2, 1, 1, 0, 1, 1);
 		
-		JLabel label2 = new JLabel("Player two");
+		JLabel label2 = new JLabel("<html><font color='white'>Player 2</font></html>");
 		label2.setFont(label2.getFont().deriveFont(32f));
 		addComp(main, label2, 0, 3, 1, 1, 0, 1, 1);
 

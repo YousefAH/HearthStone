@@ -45,10 +45,9 @@ public class Controller implements ActionListener, GameListener {
 		model.setTitle("HearthStone");
 		model.getEndTurn().addActionListener(this);
 		model.getHeroPower().addActionListener(this);
-		
+
 		g = new Game(p1, p2);
 		g.setListener(this);
-		g.getCurrentHero().setCurrentHP(1);
 		model.getcText().setText(g.getCurrentHero().getName() + "\nMana: "
 				+ g.getCurrentHero().getCurrentManaCrystals() + "\nHp: " + g.getCurrentHero().getCurrentHP() + "\nCards Left in Deck: "+ g.getCurrentHero().getDeck().size());
 		model.getoText().setText(g.getOpponent().getName() + "\nMana: " + g.getOpponent().getCurrentManaCrystals()
@@ -96,7 +95,7 @@ public class Controller implements ActionListener, GameListener {
 
 	public void onGameOver() 
 	{
-		Hero winner = (g.getCurrentHero().getCurrentHP()==0)? g.getCurrentHero():g.getOpponent();
+		Hero winner = (g.getCurrentHero().getCurrentHP()==0)? g.getOpponent():g.getCurrentHero();
 		String[] o = {"Close Window"};
 		int val = JOptionPane.showOptionDialog(null, winner.getName()+" won", "Winner!!", JOptionPane.DEFAULT_OPTION, 0, null, o,o[0]);
 		if(val == -1 || val == 0)
@@ -120,6 +119,7 @@ public class Controller implements ActionListener, GameListener {
 		genButtonHand(g.getOpponent().getHand(), oHand, model.getOpponentHandPanel());
 		genButtonFieled(g.getCurrentHero().getField(), cField, model.getCurrentFieldPanel());
 		genButtonFieled(g.getOpponent().getField(), oField, model.getOpponentFieldPanel());
+		
 		model.repaint();
 		model.revalidate();
 	}
@@ -164,6 +164,7 @@ public class Controller implements ActionListener, GameListener {
 		ImageIcon icon;
 		if(c instanceof HeroTargetSpell)
 			{
+
 				val = JOptionPane.showOptionDialog(null, "Choose a Targer", "", JOptionPane.DEFAULT_OPTION, 0, null, posibleValuesHeroSpell, posibleValuesHeroSpell[3]);
 				if(val == 0) {
 					g.getCurrentHero().castSpell((HeroTargetSpell)c, g.getCurrentHero());
@@ -175,11 +176,13 @@ public class Controller implements ActionListener, GameListener {
 					model.getCurrentHandPanel().remove(cHand.indexOf(s));
 					cHand.remove(cHand.indexOf(s));
 				}
-				else if(val == 2)
+				else if(val == 2) 
 					usedSpell = (Spell) c;
+	
 			}
 		else if(usedSpell != null)
 		{
+			
 			if(usedSpell instanceof LeechingSpell)
 				g.getCurrentHero().castSpell((LeechingSpell)usedSpell, (Minion)c);
 			if(usedSpell instanceof MinionTargetSpell)
@@ -192,21 +195,22 @@ public class Controller implements ActionListener, GameListener {
 				icon = new ImageIcon(newimg);
 				((JButton)e.getSource()).setIcon(icon);
 			}
-			model.getCurrentHandPanel().remove(cHand.indexOf(s));
-			cHand.remove(cHand.indexOf(s));
 			usedSpell = null;
-
+			updateScreen();
 		}
 		else 
 		{
-		if(c instanceof AOESpell)
-			g.getCurrentHero().castSpell((AOESpell)c, g.getOpponent().getField());
-		else if(c instanceof FieldSpell)
-			g.getCurrentHero().castSpell((FieldSpell)c);
-		else
-			usedSpell = (Spell) c;
-		model.getCurrentHandPanel().remove(cHand.indexOf(s));
-		cHand.remove(cHand.indexOf(s));
+			if (c instanceof AOESpell) {
+				g.getCurrentHero().castSpell((AOESpell) c, g.getOpponent().getField());
+				model.getCurrentHandPanel().remove(cHand.indexOf(s));
+				cHand.remove(cHand.indexOf(s));
+			} else if (c instanceof FieldSpell) {
+				g.getCurrentHero().castSpell((FieldSpell) c);
+				model.getCurrentHandPanel().remove(cHand.indexOf(s));
+				cHand.remove(cHand.indexOf(s));
+			} else
+				usedSpell = (Spell) c;
+
 		}
 		updateScreen();
 		model.repaint();
@@ -341,14 +345,14 @@ public class Controller implements ActionListener, GameListener {
 				else if (oField.indexOf(e.getSource()) != -1)
 					c = g.getOpponent().getField().get(oField.indexOf(e.getSource()));
 				else
-					throw new InvalidTargetException("You cannot target cards in your opponent's hand");
+					throw new InvalidTargetException("You can only target cards on either fields");
 				castSpell(e, c);
 			}
 
 			model.getcText().setText(g.getCurrentHero().getName() + "\nMana: "
-					+ g.getCurrentHero().getCurrentManaCrystals() + "\nHp: " + g.getCurrentHero().getCurrentHP());
+					+ g.getCurrentHero().getCurrentManaCrystals() + "\nHp: " + g.getCurrentHero().getCurrentHP() + "\nCards Left in Deck: "+ g.getCurrentHero().getDeck().size());
 			model.getoText().setText(g.getOpponent().getName() + "\nMana: " + g.getOpponent().getCurrentManaCrystals()
-					+ "\nHp: " + g.getOpponent().getCurrentHP());
+					+ "\nHp: " + g.getOpponent().getCurrentHP()+"\nCards Left in Deck: "+ g.getOpponent().getDeck().size());
 
 			model.repaint();
 
@@ -383,7 +387,8 @@ public class Controller implements ActionListener, GameListener {
 		} catch (CloneNotSupportedException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		} catch (Exception e1) {
-			JOptionPane.showMessageDialog(null, "UNEXPECTED ERROR PLEASE REPORT");
+			e1.printStackTrace();
+			//JOptionPane.showMessageDialog(null, "UNEXPECTED ERROR PLEASE REPORT");
 		}
 	}
 
