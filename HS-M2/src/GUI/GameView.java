@@ -20,6 +20,11 @@ public class GameView extends JFrame  {
 	
 	private JButton heroPower;
 	private JButton endTurn;
+	private JButton callAFreind;
+	public JButton getCallAFreind() {
+		return callAFreind;
+	}
+
 	private JLabel cardDisplay;
 	private JTextArea cardInfo;
 	
@@ -82,9 +87,13 @@ public class GameView extends JFrame  {
 		mainPanel.add(currentFieldPanel);
 		mainPanel.add(currentHandPanel);
 		
+		callAFreind = new JButton("Call A Friend");
+		
 		JPanel buttonsBottom = new JPanel();
 		buttonsBottom.add(heroPower);
+		buttonsBottom.add(callAFreind);
 		buttonsBottom.add(endTurn);
+		
 		this.add(buttonsBottom,BorderLayout.SOUTH);
 		
 		this.revalidate();

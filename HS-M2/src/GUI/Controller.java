@@ -296,6 +296,10 @@ public class Controller implements ActionListener, GameListener {
 			Card c;
 			if (e.getActionCommand().equals("End Turn"))
 				endTurn();
+			else if(e.getActionCommand().equals("Call A Friend"))
+			{
+				
+			}
 			else if (e.getActionCommand().equals("Hero Power"))
 				heroPower();
 			else if(powerTrigger)
