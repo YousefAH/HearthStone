@@ -60,41 +60,44 @@ public class Controller implements ActionListener, GameListener {
 	{
 		for (int i = 0; i < hand.size(); i++) {
 			JButton b = new JButton(hand.get(i).getName());
+			l.add(b);
+			p.add(b);
+			b.addActionListener(this);
 			ImageIcon icon;
 			if (hand.get(i).getName().equals("Shadow Word: Death"))
 				icon = new ImageIcon("images/Shadow Word.png");
 			else
 				icon = new ImageIcon("images/" + hand.get(i).getName() + ".png");
 			Image img = icon.getImage();
-			Image newimg = img.getScaledInstance(157, 234, Image.SCALE_SMOOTH);
+			Image newimg = img.getScaledInstance((int)(model.getHeight()*0.14), (int)(model.getHeight()*0.22), Image.SCALE_SMOOTH);
 			icon = new ImageIcon(newimg);
 			b.setIcon(icon);
-			l.add(b);
-			p.add(b);
-			b.addActionListener(this);
+			b.setOpaque(false);
 		}
 	}
 	
 	public void genButtonFieled(ArrayList<Minion> hand, ArrayList<JButton> l, JPanel p) {
 		for (int i = 0; i < hand.size(); i++) {
 			JButton b = new JButton(hand.get(i).getName());
+			l.add(b);
+			p.add(b);
+			b.addActionListener(this);
 			ImageIcon icon;
 			if (hand.get(i).getName().equals("Shadow Word: Death"))
 				icon = new ImageIcon("images/Shadow Word.png");
 			else
 				icon = new ImageIcon("images/" + hand.get(i).getName() + ".png");
 			Image img = icon.getImage();
-			Image newimg = img.getScaledInstance(157, 234, Image.SCALE_SMOOTH);
+			Image newimg = img.getScaledInstance((int)(model.getHeight()*0.14), (int)(model.getHeight()*0.22), Image.SCALE_SMOOTH);
 			icon = new ImageIcon(newimg);
 			b.setIcon(icon);
-			l.add(b);
-			p.add(b);
-			b.addActionListener(this);
+			b.setOpaque(false);
 		}
 	}
 
 	public void onGameOver() 
 	{
+		updateScreen();
 		Hero winner = (g.getCurrentHero().getCurrentHP()==0)? g.getOpponent():g.getCurrentHero();
 		String[] o = {"Close Window"};
 		int val = JOptionPane.showOptionDialog(null, winner.getName()+" won", "Winner!!", JOptionPane.DEFAULT_OPTION, 0, null, o,o[0]);
@@ -137,11 +140,14 @@ public class Controller implements ActionListener, GameListener {
 		}
 		else
 			model.getCardInfo().setText("");
+		
 	}
 	public void endTurn() throws FullHandException, CloneNotSupportedException 
 	{
 			g.endTurn();
 			updateScreen();
+		    model.getCardDisplay().setIcon(new ImageIcon("images/card.png"));
+
 	}
 	
 	public void summonMinion(ActionEvent e,Card c) throws NotYourTurnException , NotEnoughManaException, FullFieldException

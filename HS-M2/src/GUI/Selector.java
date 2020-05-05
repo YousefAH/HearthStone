@@ -4,6 +4,7 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -62,20 +63,22 @@ public class Selector extends JFrame implements ActionListener
 		ImageIcon priest  = new ImageIcon("images/Priest.png");
 		ImageIcon hunter = new ImageIcon("images/Hunter.png");
 		ImageIcon mage  = new ImageIcon("images/Mage.png");
+		ImageIcon[] icons = {paladin,warlock,priest,hunter,mage};
 		
-		JLabel paladin1 =  new JLabel(paladin);
-		JLabel warlock1 =  new JLabel(warlock);
-		JLabel priest1 =  new JLabel(priest);
-		JLabel hunter1 =  new JLabel(hunter);
-		JLabel mage1 =  new JLabel(mage);
+		JLabel paladin1 =  new JLabel();
+		JLabel warlock1 =  new JLabel();
+		JLabel priest1 =  new JLabel();
+		JLabel hunter1 =  new JLabel();
+		JLabel mage1 =  new JLabel();
 		
-		JLabel paladin2 =  new JLabel(paladin);
-		JLabel warlock2 =  new JLabel(warlock);
-		JLabel priest2 =  new JLabel(priest);
-		JLabel hunter2 =  new JLabel(hunter);
-		JLabel mage2 =  new JLabel(mage);
+		JLabel paladin2 =  new JLabel();
+		JLabel warlock2 =  new JLabel();
+		JLabel priest2 =  new JLabel();
+		JLabel hunter2 =  new JLabel();
+		JLabel mage2 =  new JLabel();
 		
-		
+		JLabel[] labels1 = {paladin1,warlock1,priest1,hunter1,mage1};
+		JLabel[] labels2 = {paladin2,warlock2,priest2,hunter2,mage2};
 
 				
 		player1Images.add(paladin1);
@@ -161,7 +164,16 @@ public class Selector extends JFrame implements ActionListener
             AbstractButton button = buttons.nextElement();
             button.setOpaque(false);
 		}
- 
+		
+		for (int i = 0; i < icons.length; i++) 
+		{
+			Image img = icons[i].getImage();
+			labels1[i].setSize(icons[i].getIconWidth(),(int)(this.getHeight()*0.36));
+			Image newimg = img.getScaledInstance(labels1[i].getWidth(), labels1[i].getHeight(), Image.SCALE_DEFAULT);
+			icons[i] = new ImageIcon(newimg);
+			labels1[i].setIcon(icons[i]);
+			labels2[i].setIcon(icons[i]);
+		}
 		
 		this.repaint();
 		this.revalidate();

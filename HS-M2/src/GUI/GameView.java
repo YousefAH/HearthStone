@@ -31,6 +31,7 @@ public class GameView extends JFrame  {
 		this.setBounds(500, 200, 1100, 650);
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+
 		setResizable(false);
 
 		oText = new JTextArea();
@@ -69,6 +70,8 @@ public class GameView extends JFrame  {
 	    this.add(info,BorderLayout.EAST);
 	    cText.setText("current Hero");
 	    oText.setText("Opponent");
+	    cardDisplay.setSize(info.getWidth(),(int)(this.getHeight()*0.6));
+	    cardDisplay.setMaximumSize(cardDisplay.getSize());
 	    cardDisplay.setIcon(new ImageIcon("images/card.png"));
 		mainPanel.setLayout(new GridLayout(4,0));
 		opponentHandPanel.setLayout(new GridLayout(0,10));
