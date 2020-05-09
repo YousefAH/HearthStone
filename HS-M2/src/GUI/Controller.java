@@ -53,7 +53,7 @@ public class Controller implements ActionListener, GameListener {
 		model.getoText().setText(g.getOpponent().getName() + "\nMana: " + g.getOpponent().getCurrentManaCrystals()
 				+ "\nHp: " + g.getOpponent().getCurrentHP()+"\nCards Left in Deck: "+ g.getOpponent().getDeck().size());
 		genButtonHand(g.getCurrentHero().getHand(), cHand, model.getCurrentHandPanel());
-		genButtonHand(g.getOpponent().getHand(), oHand, model.getOpponentHandPanel());
+		genButtonHandOpp(g.getOpponent().getHand(), oHand, model.getOpponentHandPanel());
 	}
 
 	public void genButtonHand(ArrayList<Card> hand, ArrayList<JButton> l, JPanel p)
@@ -74,6 +74,22 @@ public class Controller implements ActionListener, GameListener {
 			b.setIcon(icon);
 			b.setOpaque(false);
 		}
+	}
+		public void genButtonHandOpp(ArrayList<Card> hand, ArrayList<JButton> l, JPanel p)
+		{
+			for (int i = 0; i < hand.size(); i++) {
+				JButton b = new JButton();
+				l.add(b);
+				p.add(b);
+				b.addActionListener(this);
+				ImageIcon icon;
+				icon = new ImageIcon("images/card back.png");
+				Image img = icon.getImage();
+				Image newimg = img.getScaledInstance((int)(model.getHeight()*0.14), (int)(model.getHeight()*0.22), Image.SCALE_SMOOTH);
+				icon = new ImageIcon(newimg);
+				b.setIcon(icon);
+				b.setOpaque(false);
+			}
 	}
 	
 	public void genButtonFieled(ArrayList<Minion> hand, ArrayList<JButton> l, JPanel p) {
@@ -119,7 +135,7 @@ public class Controller implements ActionListener, GameListener {
 		model.getCurrentFieldPanel().removeAll();
 		model.getOpponentFieldPanel().removeAll();;
 		genButtonHand(g.getCurrentHero().getHand(), cHand, model.getCurrentHandPanel());
-		genButtonHand(g.getOpponent().getHand(), oHand, model.getOpponentHandPanel());
+		genButtonHandOpp(g.getOpponent().getHand(), oHand, model.getOpponentHandPanel());
 		genButtonFieled(g.getCurrentHero().getField(), cField, model.getCurrentFieldPanel());
 		genButtonFieled(g.getOpponent().getField(), oField, model.getOpponentFieldPanel());
 		
