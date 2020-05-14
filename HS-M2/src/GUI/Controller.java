@@ -107,7 +107,9 @@ public class Controller implements ActionListener, GameListener {
 			Image newimg = img.getScaledInstance((int)(model.getHeight()*0.14), (int)(model.getHeight()*0.22), Image.SCALE_SMOOTH);
 			icon = new ImageIcon(newimg);
 			b.setIcon(icon);
-			b.setOpaque(false);
+			if(hand.get(i).isDivine())
+				b.setBackground(Color.YELLOW);
+			//b.setOpaque(false);
 		}
 	}
 
@@ -144,18 +146,18 @@ public class Controller implements ActionListener, GameListener {
 	}
 	public void viewDetails(ActionEvent e)
 	{
+		@SuppressWarnings("unused")
 		Minion c = null;
 		model.getCardDisplay().setIcon(new ImageIcon("images/" + e.getActionCommand() + ".png"));
 		if (cField.indexOf(e.getSource()) != -1) {
 			c = g.getCurrentHero().getField().get(cField.indexOf(e.getSource()));
-			model.getCardInfo().setText("Current Attack: "+c.getAttack()+"\nCurrent Hp: "+c.getCurrentHP());
+			JOptionPane.showMessageDialog(null, "Attack: " + c.getAttack() +" Current HP: "+ c.getCurrentHP());
 		}
 		else if (oField.indexOf(e.getSource()) != -1) {
 			c = g.getOpponent().getField().get(oField.indexOf(e.getSource()));
-			model.getCardInfo().setText("Current Attack: "+c.getAttack()+"\nCurrent Hp: "+c.getCurrentHP());
+			JOptionPane.showMessageDialog(null, "Attack: " + c.getAttack() +" Current HP: "+ c.getCurrentHP());
 		}
-		else
-			model.getCardInfo().setText("");
+		
 		
 	}
 	public void endTurn() throws FullHandException, CloneNotSupportedException 

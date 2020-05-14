@@ -26,7 +26,6 @@ public class GameView extends JFrame  {
 	}
 
 	private JLabel cardDisplay;
-	private JTextArea cardInfo;
 	
 	private GridBagConstraints gbc = new GridBagConstraints();
 	public GameView() throws IOException 
@@ -63,14 +62,9 @@ public class GameView extends JFrame  {
 		
 		cardDisplay = new JLabel();
 		cardDisplay.setSize(info.getWidth(),(int)(info.getHeight()*0.3));
-		cardInfo= new JTextArea();
-		cardInfo.setOpaque(false);
-		cardInfo.setFont(cardInfo.getFont().deriveFont(24f));
-		cardInfo.setEditable(false);
 	    addComp(info, oText, 0, 0, 1, 1, GridBagConstraints.BOTH, 1, 1);
 	    addComp(info, cardDisplay, 0, 1, 1, 1, GridBagConstraints.BOTH, 1, 1);
-	    addComp(info, cardInfo, 0, 2, 1, 1, GridBagConstraints.BOTH, 1, 1);
-	    addComp(info, cText, 0, 3, 1, 1, GridBagConstraints.BOTH, 1, 1);
+	    addComp(info, cText, 0, 2, 1, 1, GridBagConstraints.BOTH, 1, 1);
 	    
 	    this.add(info,BorderLayout.EAST);
 	    cText.setText("current Hero");
@@ -87,11 +81,11 @@ public class GameView extends JFrame  {
 		mainPanel.add(currentFieldPanel);
 		mainPanel.add(currentHandPanel);
 		
-		callAFreind = new JButton("Call A Friend");
+		//callAFreind = new JButton("Call A Friend");
 		
 		JPanel buttonsBottom = new JPanel();
 		buttonsBottom.add(heroPower);
-		buttonsBottom.add(callAFreind);
+		//buttonsBottom.add(callAFreind);
 		buttonsBottom.add(endTurn);
 		
 		this.add(buttonsBottom,BorderLayout.SOUTH);
@@ -100,9 +94,7 @@ public class GameView extends JFrame  {
 		this.repaint();
 	}
 	
-	public JTextArea getCardInfo() {
-		return cardInfo;
-	}
+	
 
 	public void setCurrentFieldPanel(JPanel currentFieldPanel) {
 		this.currentFieldPanel = currentFieldPanel;
