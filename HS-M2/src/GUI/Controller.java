@@ -37,20 +37,25 @@ public class Controller implements ActionListener, GameListener {
 	private String[] possibleAttacker = {"Opponent","A Minion", "Cancel"};
 	private String[] posibleValuesSpell = { "Activate", "View Details", "Cancel" };
 	private String[] posibleValuesHeroSpell = { "Myself", "Opponent","A Minion", "Cancel" };
+	private String name1;
+	private String name2;
 
-	public Controller(Hero p1, Hero p2) throws IOException, FullHandException, CloneNotSupportedException 
+	public Controller(Hero p1, Hero p2, String n1, String n2) throws IOException, FullHandException, CloneNotSupportedException 
 	{
 
 		model = new GameView();
 		model.setTitle("HearthStone");
 		model.getEndTurn().addActionListener(this);
 		model.getHeroPower().addActionListener(this);
-
+		
+		name1 = n1;
+		name2 = n2;
+		
 		g = new Game(p1, p2);
 		g.setListener(this);
-		model.getcText().setText(g.getCurrentHero().getName() + "\nMana: "
+		model.getcText().setText(name1 + "\nMana: "
 				+ g.getCurrentHero().getCurrentManaCrystals() + "\nHp: " + g.getCurrentHero().getCurrentHP() + "\nCards Left in Deck: "+ g.getCurrentHero().getDeck().size());
-		model.getoText().setText(g.getOpponent().getName() + "\nMana: " + g.getOpponent().getCurrentManaCrystals()
+		model.getoText().setText(name2 + "\nMana: " + g.getOpponent().getCurrentManaCrystals()
 				+ "\nHp: " + g.getOpponent().getCurrentHP()+"\nCards Left in Deck: "+ g.getOpponent().getDeck().size());
 		genButtonHand(g.getCurrentHero().getHand(), cHand, model.getCurrentHandPanel());
 		genButtonHandOpp(g.getOpponent().getHand(), oHand, model.getOpponentHandPanel());
@@ -124,9 +129,12 @@ public class Controller implements ActionListener, GameListener {
 	}
 	public void updateScreen()
 	{
-		model.getcText().setText(g.getCurrentHero().getName() + "\nMana: "
+		String temp = name1;
+		name1 = name2;
+		name2 = temp;
+		model.getcText().setText(name1 + "\nMana: "
 				+ g.getCurrentHero().getCurrentManaCrystals() + "\nHp: " + g.getCurrentHero().getCurrentHP() + "\nCards Left in Deck: "+ g.getCurrentHero().getDeck().size());
-		model.getoText().setText(g.getOpponent().getName() + "\nMana: " + g.getOpponent().getCurrentManaCrystals()
+		model.getoText().setText(name2 + "\nMana: " + g.getOpponent().getCurrentManaCrystals()
 				+ "\nHp: " + g.getOpponent().getCurrentHP()+"\nCards Left in Deck: "+ g.getOpponent().getDeck().size());
 		cHand = new ArrayList<JButton>();
 		oHand = new ArrayList<JButton>();
@@ -376,9 +384,9 @@ public class Controller implements ActionListener, GameListener {
 				castSpell(e, c);
 			}
 
-			model.getcText().setText(g.getCurrentHero().getName() + "\nMana: "
+			model.getcText().setText(name1 + "\nMana: "
 					+ g.getCurrentHero().getCurrentManaCrystals() + "\nHp: " + g.getCurrentHero().getCurrentHP() + "\nCards Left in Deck: "+ g.getCurrentHero().getDeck().size());
-			model.getoText().setText(g.getOpponent().getName() + "\nMana: " + g.getOpponent().getCurrentManaCrystals()
+			model.getoText().setText(name2 + "\nMana: " + g.getOpponent().getCurrentManaCrystals()
 					+ "\nHp: " + g.getOpponent().getCurrentHP()+"\nCards Left in Deck: "+ g.getOpponent().getDeck().size());
 
 			model.repaint();

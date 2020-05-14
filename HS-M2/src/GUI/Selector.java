@@ -1,5 +1,6 @@
 package GUI;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -37,6 +38,9 @@ public class Selector extends JFrame implements ActionListener
 	private JRadioButton oWarlock = new JRadioButton("<html><font color='white'>Warlock</font></html>");
 	private JRadioButton oPriest = new JRadioButton("<html><font color='white'>Priest</font></html>");
 	
+	private JTextArea label1 = new JTextArea("Player 1");
+	private JTextArea label2 = new JTextArea("Player 2");
+
 	private JPanel main = new JPanel();
 	private GridBagConstraints gbc = new GridBagConstraints();
 	public Selector() throws IOException
@@ -53,8 +57,8 @@ public class Selector extends JFrame implements ActionListener
 		main.setLayout(new GridBagLayout());
 		main.setOpaque(false);
 		
-		JLabel label1 = new JLabel("<html><font color='white'>Player 1</font></html>");
 		label1.setFont(label1.getFont().deriveFont(32f));
+		label1.setForeground(Color.WHITE);
 		addComp(main, label1, 0, 0, 1, 1, 0, 1, 1);
 		
 		
@@ -112,11 +116,13 @@ public class Selector extends JFrame implements ActionListener
 		group1.add(cPriest);
 		addComp(main, player1Buttons, 0, 2, 1, 1, 0, 1, 1);
 		
-		JLabel label2 = new JLabel("<html><font color='white'>Player 2</font></html>");
 		label2.setFont(label2.getFont().deriveFont(32f));
+		label2.setForeground(Color.WHITE);
 		addComp(main, label2, 0, 3, 1, 1, 0, 1, 1);
-
 		
+		label1.setOpaque(false);
+		label2.setOpaque(false);
+
 		player2Images.add(paladin2);
 		player2Images.add(mage2);
 		player2Images.add(hunter2);
@@ -175,6 +181,8 @@ public class Selector extends JFrame implements ActionListener
 			labels2[i].setIcon(icons[i]);
 		}
 		
+		JOptionPane.showMessageDialog(null, "Pick a class and type your name in the player field");
+		
 		this.repaint();
 		this.revalidate();
 	}
@@ -217,11 +225,7 @@ public class Selector extends JFrame implements ActionListener
 					p2 = new Warlock();
 				if(p1 != null && p2 != null)
 				{
-					if(p1.getName().equals(p2.getName())) {
-						p1.setName(p1.getName()+"(1)");
-						p2.setName(p2.getName()+"(2)");
-					}
-					new Controller(p1, p2);
+					new Controller(p1, p2,label1.getText(),label2.getText());
 					this.dispose();
 				}
 			} catch (IOException | CloneNotSupportedException | FullHandException e1) {
