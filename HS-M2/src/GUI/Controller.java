@@ -146,7 +146,6 @@ public class Controller implements ActionListener, GameListener {
 	}
 	public void viewDetails(ActionEvent e)
 	{
-		@SuppressWarnings("unused")
 		Minion c = null;
 		model.getCardDisplay().setIcon(new ImageIcon("images/" + e.getActionCommand() + ".png"));
 		if (cField.indexOf(e.getSource()) != -1) {
