@@ -188,7 +188,7 @@ public class Controller implements ActionListener, GameListener {
 		if(c instanceof HeroTargetSpell)
 			{
 
-				val = JOptionPane.showOptionDialog(null, "Choose a Targer", "", JOptionPane.DEFAULT_OPTION, 0, null, posibleValuesHeroSpell, posibleValuesHeroSpell[3]);
+				val = JOptionPane.showOptionDialog(null, "Choose a Target", "", JOptionPane.DEFAULT_OPTION, 0, null, posibleValuesHeroSpell, posibleValuesHeroSpell[3]);
 				if(val == 0) {
 					g.getCurrentHero().castSpell((HeroTargetSpell)c, g.getCurrentHero());
 					model.getCurrentHandPanel().remove(cHand.indexOf(s));
@@ -266,7 +266,7 @@ public class Controller implements ActionListener, GameListener {
 		int val = -1;
 		if(g.getCurrentHero() instanceof Priest ) 
 		{
-			val = JOptionPane.showOptionDialog(null, "Choose a Targer", "", JOptionPane.DEFAULT_OPTION, 0, null, posibleValuesHeroSpell, posibleValuesHeroSpell[3]);
+			val = JOptionPane.showOptionDialog(null, "Choose a Target", "", JOptionPane.DEFAULT_OPTION, 0, null, posibleValuesHeroSpell, posibleValuesHeroSpell[3]);
 			if(val == 0)
 				((Priest)g.getCurrentHero()).useHeroPower(g.getCurrentHero());
 			else if(val == 1)
@@ -276,7 +276,7 @@ public class Controller implements ActionListener, GameListener {
 		}
 		else if(g.getCurrentHero() instanceof Mage ) 
 		{
-			val = JOptionPane.showOptionDialog(null, "Choose a Targer", "", JOptionPane.DEFAULT_OPTION, 0, null, posibleValuesHeroSpell, posibleValuesHeroSpell[3]);
+			val = JOptionPane.showOptionDialog(null, "Choose a Target", "", JOptionPane.DEFAULT_OPTION, 0, null, posibleValuesHeroSpell, posibleValuesHeroSpell[3]);
 			if(val == 0)
 				((Mage)g.getCurrentHero()).useHeroPower(g.getCurrentHero());
 			else if(val == 1)
