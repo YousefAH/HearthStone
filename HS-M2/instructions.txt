@@ -1,0 +1,24 @@
+1. How to select the two heroes.
+-when the game starts a hero selector will pop up where both players put their names and choose a hero
+2. How the current hero plays a minion.
+-by clicking on the button of the desired minion from his hand and choosing summon from the pop up
+3. How the current hero casts all types of spells ( hero target, minion target etc.).
+- by clicking on the button of the desired spell from his hand and choosing activate from the pop up
+- if the spell has a target a pop up will allow the player to choose the type of target(hero,current player or opponent, or minion) and if it is a minion the player needs to then click on the minion he wants to target onz the field
+4. How the current hero uses his minions to attack the opponent’s minion.
+-by clicking on his minion and choosing attack from the pop up then choosing minion and then clicking the minion he/she wants to attack
+5. How to end the turn.
+-there is an end turn button at the bottom of the screen
+6. Specify the screen orientation (whether the current hero hand and field is at a fixed half i.e top/button or each hero has a fixed half).
+-the current player always has the buttom half as it switches each turn
+	opponent hand
+	opponent field
+	current player field
+	current player hand
+7. Any other details that might be specific to your own implementation.
+- screen resolution is 1920 x 1080
+-class to run is controller in GUI package
+- when the player needs to better view a card he/she can click on it and then choosing view details and a larger image will be viewed on the side and if its on either fields a pop up will show its attack and current HP
+-if a minion on either fields has a divine shield it will have a yellow background
+-if a hero power requires a target it will work similar to spells targeting
+
