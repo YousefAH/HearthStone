@@ -20,5 +20,5 @@
 -class to run is controller in GUI package
 - when the player needs to better view a card he/she can click on it and then choosing view details and a larger image will be viewed on the side and if its on either fields a pop up will show its attack and current HP
 -if a minion on either fields has a divine shield it will have a yellow background
--if a hero power requires a target it will work similar to spells targeting
+-if a hero power(activated by clicking the button in the button of the screen) requires a target it will work similar to spells targeting
 
